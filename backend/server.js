@@ -5,6 +5,8 @@ require('dotenv').config()
 // after running npm i express 
 const express = require('express')
 
+const mongoose = require('mongoose')
+
 const bpDataRoutes = require('./routes/bp-data')
 
 // we can create an instance of express  
@@ -21,16 +23,22 @@ app.use((req, res, next) => {
   return next()
 })
 
-
 const port = process.env.PORT
 
 // when we fire a request to this path, use these routes
 app.use('/api/bp-data', bpDataRoutes)
 
+//connect to db, .connect is an async method that returns a promise object
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    // only listen for requests when we connect to the db. 
+    // express instance has a listen method which listens for a specific port and executes the anonymous function
+    app.listen(port, () => {
+      console.log(`Connected to DB and listening on port ${port}`)
+    })
+  })
+  .catch((error)=> {
+    console.log(error)
+  })
 
-// express instance has a listen method which listens for a specific port and executes the anonymous function
-app.listen(port, () => {
-  console.log(`listening on port ${port}`)
-})
 
-//nodemon watches our files and re-runs the application whenever a chance is made
