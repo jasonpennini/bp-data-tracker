@@ -5,9 +5,9 @@ const mongoose = require('mongoose')
 const getAllBattingPractices = async (req, res) => {
   try { 
     const battingPractices = await BPWorkout.find({}).sort({createdAt:-1})
-    res.status(200).json(battingPractices)
+    return res.status(200).json(battingPractices)
   } catch(error) {
-    res.status(400).json({error: error.message})
+    return res.status(400).json({error: error.message})
   }
 }
 
@@ -16,13 +16,12 @@ const getOneBattingPractice = async(req, res) => {
   try {
     const {id} = req.params
     if(!mongoose.Types.ObjectId.isValid(id)) {
-      console.log('here')
       return res.status(404).json({error:"No such batting practice"})
     }
     const battingPractice = await BPWorkout.findById(id)
-    res.status(200).json(battingPractice)
+    return res.status(200).json(battingPractice)
   } catch(error) {
-    res.status(400).json({error:error.message})
+    return res.status(400).json({error:error.message})
   }
 }
 
@@ -35,21 +34,47 @@ const createBattingPractice = async (req, res) => {
     // the Workout model creates an object to send back to the front end and returns it in json format.
     // adds document to the DB in MongoDB too 
     const battingPractice = await BPWorkout.create({player, bpType, date, maxEV, contactPercentage})
-    res.status(200).json(battingPractice)
+    return res.status(200).json(battingPractice)
   } catch(error) {
-    res.status(400).json({error:error.message})
+    return res.status(400).json({error:error.message})
   }
 }
 
-
-
-
 // delete bp
+const deleteBattingPractice = async (req, res) => {
+  try {
+    const {id} = req.params
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({error:"No such batting practice"})
+    }
+    const battingPractice = await BPWorkout.findOneAndDelete({_id:id})
+    return res.status(200).json(battingPractice)
+  } catch {
+    return res.status(400).json({error:"No such batting practice"})
+  }
+}
 
 // edit bp
+const updateBattingPracitce = async (req, res) => {
+  try {
+    const {id} = req.params
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({error:"No such batting practice"})
+    }
+
+    const battingPractice = await BPWorkout.findOneAndUpdate({_id:id}, {
+      ...req.body
+    })
+    return res.status(200).json(battingPractice)
+  } catch(error) {
+    return res.status(400).json({error:error})
+  }
+}
 
 module.exports = {
   createBattingPractice,
   getAllBattingPractices,
-  getOneBattingPractice
+  getOneBattingPractice, 
+  updateBattingPracitce,
+  deleteBattingPractice
 }
