@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react'
 
 //components
 import BPDetails from "../components/BPDetails"
+import BPEntryForm from "../components/BPEntryForm"
 
 // empty dependency array tells useEffect hook to only fire once
 const Home = () => {
@@ -33,6 +34,9 @@ const Home = () => {
           {BPWorkouts && BPWorkouts.map((battingPractice) => (
             <BPDetails battingPractice={battingPractice} key={battingPractice._id} />
           ))}
+        </div>
+        <div className="bpEntryForm">
+          <BPEntryForm />
         </div>
       </div>
     )
