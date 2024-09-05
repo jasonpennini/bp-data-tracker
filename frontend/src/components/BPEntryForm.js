@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useBPContext } from '../hooks/useBPEntriesContext'
 
 const BPEntryForm = () => {
   const [player, setPlayer] = useState("")
@@ -7,6 +8,7 @@ const BPEntryForm = () => {
   const [maxEV, setMaxEV] = useState("")
   const [contactPercentage, setContactPercentage] = useState("")
   const [error, setError] = useState("")
+  const { dispatch } = useBPContext()
 
   const handleSubmit = async (e) => {
     //prevents default action of form getting resubmitted
@@ -37,6 +39,11 @@ const BPEntryForm = () => {
       setContactPercentage('')
       setDate('')
       setBPtype('')
+      // when dispatch function is invoked it updates the state of the BPEntries Object on BPContext. 
+      // It is adding the payload to the array of objects, which is the newly created BPEntry
+      // When this happens the Home Component is automatically re-rendered, due to the virtual DOM. It knows a change has been made
+      // The map function will cycle through the BPEntries object and render the new BPEntry to the page, also causing re-fresh.  
+      dispatch({type:'CREATE_BPENTRY', payload:json})
     }
   }
 

@@ -62,7 +62,6 @@ header a {
   padding: 6px;
   background: #fff; 
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); 
-  cursor: pointer;
   color: #333;
 }
 
@@ -86,7 +85,6 @@ form button {
   padding: 10px;
   font-family: "Poppins";
   border-radius: 4px;
-  cursor: pointer;
 }
 div.error {
   padding: 10px;
