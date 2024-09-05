@@ -10,18 +10,24 @@ const bpWorkoutSchema = new Schema ({
   bpType: {
     type: String,
     required:true,
+    
   },
   date: {
     type: Date,
     requried:true,
+    max:Date.now,
   },
   maxEV: {
     type: Number,
     required:true,
+    min:0,
+    max:130,
   },
   contactPercentage: {
     type: Number,
     required:true,
+    min: 0,
+    max:100,
   }
 }, {timestamps: true})
 

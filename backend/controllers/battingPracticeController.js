@@ -28,6 +28,33 @@ const getOneBattingPractice = async(req, res) => {
 // create new bp
 const createBattingPractice = async (req, res) => {
   const {player, bpType, date, maxEV, contactPercentage} = req.body
+
+  let errorFields = []
+  const inputDate = new Date(date);
+  const today = new Date()
+  const validMaxEV = maxEV => 0 && maxEV <= 130;
+  const validContactPCT = contactPercentage => 0 && contactPercentage <= 100
+  
+  if(!player) {
+    errorFields.push('Player')
+  }
+  if(!bpType) {
+    errorFields.push('BP Type')
+  }  
+  if(!date || inputDate > today) {
+    errorFields.push('Date')
+  }
+  if(!maxEV || !validMaxEV) {
+    errorFields.push('Max EV')
+  }
+  if(!contactPercentage || !validContactPCT) {
+    errorFields.push('Contact Percentage')
+  }
+
+  if(errorFields.length>0) {
+    return res.status(400).json({error: `Please fill in all fields with valid values: ${errorFields}`, errorFields})
+  }
+
   try {
     // workout model tests the inputs that we destructured off the request body on the front end and creates an object 
     // if the inputs from the UI meet the criteria set in the Schema. If they do
