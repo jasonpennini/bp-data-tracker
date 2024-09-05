@@ -11,22 +11,24 @@ export const battingPracticeReducer = (state, action) => {
       }
     case 'CREATE_BPENTRY':
       return {
-        bpEntries: [action.payload, ...state.bpEntres]
+        bpEntries: [action.payload, ...state.bpEntries]
+      }
+    case 'DELETE_BPENTRY':
+      return {
+        bpEntries: state.bpEntries.filter(w => w._id !== action.payload._id)
       }
      default:
       return state
   }
 }
 
-
 // the children prop draws from App on the index.js file which is what BattingPracticeContext wraps around
 export const BPContextProvider = ({children}) => {
 
 // useReducer differes fro
   const [state, dispatch] = useReducer(battingPracticeReducer, {
-    bpEntres:null
+    bpEntries:null
   })
-
 
   return (
    // whole component tree will be wrapped around the root app component so all components have access to the BP Context State
@@ -35,5 +37,4 @@ export const BPContextProvider = ({children}) => {
     { children }
   </BattingPracticeContext.Provider>
   )
-
 }

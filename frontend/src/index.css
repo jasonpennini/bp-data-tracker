@@ -64,6 +64,16 @@ header a {
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1); 
   color: #333;
 }
+.batting-practice-details span {
+  position: flex;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 6px;
+  border-radius: 50%;
+  color: #333;
+}
 
 /* new workout form */
 label, input {
