@@ -1,22 +1,34 @@
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
 import { useBPContext } from '../hooks/useBPEntriesContext'
 
 const BPEntryForm = () => {
-  const [player, setPlayer] = useState("")
+  const { dispatch, bpEntries } = useBPContext()
   const [bpType, setBPtype] = useState("")
   const [date, setDate] = useState("")
   const [maxEV, setMaxEV] = useState("")
   const [contactPercentage, setContactPercentage] = useState("")
   const [error, setError] = useState("")
-  const { dispatch } = useBPContext()
   const [errorFields, setErrorFields] = useState([])
+  const [selectedPlayer, setSelectedPlayer] = useState('')
+  const [newPlayer, setNewPlayer] = useState('')
+  const [existingPlayers, setExistingPlayers] = useState([])
+
+  useEffect(() => {
+    // Fetch existing players from previous BP entries
+    if(bpEntries) {
+        const players = [...new Set(bpEntries.map(entry => entry.player))];
+        setExistingPlayers(players);
+    }
+  }, [bpEntries]);
 
   const handleSubmit = async (e) => {
     //prevents default action of form getting resubmitted
     e.preventDefault()
 
+    const player = selectedPlayer || newPlayer
+
     //creating a dummy object to be sent as apart of our response 
-    const bpEntry = {player, bpType, date, maxEV, contactPercentage}
+    const bpEntry = { player, bpType, date, maxEV, contactPercentage }
 
     // fetching data from the front end with a post
     const response = await fetch('/api/bp-data', {
@@ -36,7 +48,8 @@ const BPEntryForm = () => {
     if(response.ok) {
       setError(null)
       console.log('new bp entry added', json)
-      setPlayer('')
+      setSelectedPlayer('');
+      setNewPlayer('');
       setMaxEV('')
       setContactPercentage('')
       setDate('')
@@ -54,23 +67,44 @@ const BPEntryForm = () => {
     <form className="create" onSubmit={handleSubmit}>
       <h3> Add a new BP Entry</h3>
 
-      <label> Player: </label>
-      <input 
-        type="text"
-        onChange={(e)=> setPlayer(e.target.value)}
-        value={player}
-        className = {errorFields.includes('Player') ? 'error' : ''}
-        placeholder="Enter Player Name"
-       />
+    <label>Select Existing Player or Add New Player</label>
+      <select
+          value={selectedPlayer}
+          onChange={(e) => {
+              setSelectedPlayer(e.target.value);
+              setNewPlayer(''); // Clear new player input when selecting an existing player
+          }}
+      >
+          <option value="">Select...</option>
+          {existingPlayers.map((player, index) => (
+              <option key={index} value={player}>
+                  {player}
+          </option>
+          ))}
+      </select>
+      <input
+          type="text"
+          value={newPlayer}
+          onChange={(e) => {
+              setSelectedPlayer(''); // Clear selected player when typing a new one
+              setNewPlayer(e.target.value);
+          }}
+          className={errorFields.includes('Player') ? 'error' : ''}
+      />
 
-      <label> BP Type: </label>
-      <input 
-        type="text"
+      <label> BP Type </label>
+      <select
+        id="bpType"
         onChange={(e)=> setBPtype(e.target.value)}
         value={bpType}
-        className = {errorFields.includes('BP Type') ? 'error' : ''}
-        placeholder="Enter Valid BP Type"
-       />
+        className={errorFields.includes('BP Type') ? 'error' : ''}
+        >
+        <option value=""> Select ... </option>
+        <option value="Coach Thrown BP">Coach Thrown BP</option>
+        <option value="Breaking Ball Machine">Breaking Ball Machine</option>
+        <option value="High Velo Machine">High Velo Machine</option>
+        <option value="Oppo Round"> Oppo Round </option>
+      </select>
 
      <label> Date: </label>
       <input 

@@ -36,12 +36,12 @@ const { dispatch }  = useBPContext()
   return (
     <div className="batting-practice-details">
       <h4> {battingPractice.player}</h4>
-      <p><strong>bp Type: {battingPractice.bpType}</strong></p>
-      <p><strong>date:{dateFormatted}</strong></p>
-      <p><strong>maxEV: {battingPractice.maxEV}</strong></p>
-      <p><strong>contactPercentage:{battingPractice.contactPercentage}</strong></p>
-      <p>Created at :{formatDate(battingPractice.createdAt)}</p>
-      <span onClick={handleClick}> Delete </span>
+      <p><strong>BP Type: {battingPractice.bpType}</strong></p>
+      <p><strong>Date: {dateFormatted}</strong></p>
+      <p><strong>Max EV: {battingPractice.maxEV}</strong></p>
+      <p><strong>Contact %: {battingPractice.contactPercentage}</strong></p>
+      <p>Created at: {formatDate(battingPractice.createdAt)}</p>
+      <span onClick={handleClick}>Delete</span>
     </div>
   )
 }
