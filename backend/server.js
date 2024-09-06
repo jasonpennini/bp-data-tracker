@@ -8,6 +8,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 
 const bpDataRoutes = require('./routes/bp-data')
+const userRoutes = require('./routes/user')
 
 // we can create an instance of express  
 const app = express()
@@ -27,6 +28,8 @@ const port = process.env.PORT
 
 // when we fire a request to this path, use these routes
 app.use('/api/bp-data', bpDataRoutes)
+app.use('/api/user', userRoutes)
+
 
 //connect to db, .connect is an async method that returns a promise object
 mongoose.connect(process.env.MONGO_URI)
