@@ -10,7 +10,20 @@ const createToken = (_id) => {
 
 // login user
 const loginUser = async (req, res) => {
-  return res.json({mssg:"login user"})
+  // destructuring email and password from req body
+  const {email, password} = req.body
+
+  try {
+    // using User model's login method and inserting the email and password from the request body as arguments into it
+    // this will create an object user with the email and password form the request on the front end
+    // taking the hashed password
+    const user = await User.login(email, password)
+    const token = createToken(user._id)
+    return res.status(200).json({email, token})
+  } catch (error) {
+    // we could have a mongoose error here
+    return res.status(400).json({error:error.message})
+  }
 }
 
 // signup user
@@ -23,11 +36,8 @@ const signupUser = async (req, res) => {
     // taking the hashed password
 
     const user = await User.signup(email, password)
-
     const token = createToken(user._id)
-
     return res.status(200).json({email, token})
-
   } catch (error) {
     // we could have a mongoose error here
     return res.status(400).json({error:error.message})
