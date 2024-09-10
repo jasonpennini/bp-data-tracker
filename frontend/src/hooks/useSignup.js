@@ -26,7 +26,8 @@ export const useSignup = () => {
       setError(json.error)
     }
     if(response.ok) {
-      // save the user to local storage with JWT and email property
+      // save the user to local storage with JWT and email property, so if they want to log back in a couple hours later
+      // we can still detect the user is logged in with the presence of the JWT
       localStorage.setItem('user', JSON.stringify(json))
       // update auth context
       // invoking dispatch function and triggering switch case with type 'LOGIN'
