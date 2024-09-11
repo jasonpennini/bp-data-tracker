@@ -1,7 +1,6 @@
 const { json } = require('express')
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
-require('dotenv').config()
 
 // id getting passed since it will be part of the payload
 const createToken = (_id) => {
