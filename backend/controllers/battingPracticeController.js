@@ -4,7 +4,8 @@ const mongoose = require('mongoose')
 // get all batting practices
 const getAllBattingPractices = async (req, res) => {
   try { 
-    const battingPractices = await BPWorkout.find({}).sort({createdAt:-1})
+    const user_id = req.user.id
+    const battingPractices = await BPWorkout.find({user_id}).sort({createdAt:-1})
     return res.status(200).json(battingPractices)
   } catch(error) {
     return res.status(400).json({error: error.message})
@@ -27,6 +28,9 @@ const getOneBattingPractice = async(req, res) => {
 
 // create new bp
 const createBattingPractice = async (req, res) => {
+  // we know req.user exists since we will never hit this line of code without passing through the autorization middlware first
+  const user_id = req.user._id
+
   const {player, bpType, date, maxEV, contactPercentage} = req.body
 
   let errorFields = []
@@ -60,7 +64,7 @@ const createBattingPractice = async (req, res) => {
     // if the inputs from the UI meet the criteria set in the Schema. If they do
     // the Workout model creates an object to send back to the front end and returns it in json format.
     // adds document to the DB in MongoDB too 
-    const battingPractice = await BPWorkout.create({player, bpType, date, maxEV, contactPercentage})
+    const battingPractice = await BPWorkout.create({player, bpType, date, maxEV, contactPercentage, user_id})
     return res.status(200).json(battingPractice)
   } catch(error) {
     return res.status(400).json({error:error.message})

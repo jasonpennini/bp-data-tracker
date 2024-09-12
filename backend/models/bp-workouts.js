@@ -28,7 +28,11 @@ const bpWorkoutSchema = new Schema ({
     required:true,
     min: 0,
     max:100,
-  }
+  },
+  user_id: {
+    type:String,
+    required:true,
+  },
 }, {timestamps: true})
 
 //creates the model based on the schema we created above
