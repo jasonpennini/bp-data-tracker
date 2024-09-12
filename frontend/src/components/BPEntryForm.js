@@ -1,5 +1,6 @@
 import { useState, useEffect} from 'react'
 import { useBPContext } from '../hooks/useBPEntriesContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const BPEntryForm = () => {
   const { dispatch, bpEntries } = useBPContext()
@@ -13,6 +14,9 @@ const BPEntryForm = () => {
   const [newPlayer, setNewPlayer] = useState('')
   const [existingPlayers, setExistingPlayers] = useState([])
 
+  // destructuring using from useAuthContext hook
+  const {user} = useAuthContext();
+
   useEffect(() => {
     // Fetch existing players from previous BP entries
     if(bpEntries) {
@@ -25,6 +29,11 @@ const BPEntryForm = () => {
     //prevents default action of form getting resubmitted
     e.preventDefault()
 
+    if(!user) {
+      setError('You must be logged in')
+      return
+    }
+
     const player = selectedPlayer || newPlayer
 
     //creating a dummy object to be sent as apart of our response 
@@ -35,7 +44,8 @@ const BPEntryForm = () => {
       method:'POST',
       body: JSON.stringify(bpEntry),
       headers:{
-        'Content-Type':'application/json'
+        'Content-Type':'application/json',
+        'Authorization':`Bearer ${user.token}`
       }
     })
     // storing json response from back end, if the response is an error update the error state

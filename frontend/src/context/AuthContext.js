@@ -20,6 +20,8 @@ export const AuthContextProvider = ({children}) => {
     user:null
   })
 
+
+
  // when the application first loads check for the user token to see if a user is logged in. 
  // The empty dependency array tells react to only invoke useEffect when app first loads. 
  useEffect(() => {

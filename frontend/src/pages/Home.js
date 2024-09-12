@@ -1,24 +1,29 @@
 import { useEffect } from 'react'
+// hook provides us with dispatch function and state object
+import { useBPContext } from '../hooks/useBPEntriesContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 //components
 import BPDetails from "../components/BPDetails"
 import BPEntryForm from "../components/BPEntryForm"
 
-// hook provides us with dispatch function and state object
-import { useBPContext } from '../hooks/useBPEntriesContext'
-
-// empty dependency array tells useEffect hook to only fire once
 const Home = () => {
-
   // desctructuring off of the useBPContext hook. bpEntries an array of BP Entry objects. 
   // dispatch will be the function that executes the switch/case statements to update the bpEntries object on BPContext.js
   const { bpEntries, dispatch } = useBPContext()
-  
-  // useEffect hook fires only when component is first rendered
-  useEffect(() => {
+  const { user } = useAuthContext()
+
+
+  //dependency array tells useEffect hook to run when either the dispatch function or user changes, in addition to the initial rendering of home 
+   useEffect(() => {
     const fetchBPWorkouts = async () => {
       // get request for all bp data will be executed when this function is invoked. 
-      const response = await fetch('/api/bp-data/')
+      // Only perform fetch if user is authorized with bearer token from JWT
+      const response = await fetch('/api/bp-data/', {
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        },
+      })
       // creating an array of json objects with all batting practices
       const json = await response.json()
       // If the json array of objects is returned succesfully, then update state with it. 
@@ -27,8 +32,10 @@ const Home = () => {
         dispatch({type:'SET_BPENTRIES', payload: json})
       }
     }
-    fetchBPWorkouts()
-  }, [dispatch])
+    if(user) {
+      fetchBPWorkouts()
+    }
+  }, [dispatch, user])
 
     return (
       <div className="home">

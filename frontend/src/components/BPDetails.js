@@ -1,13 +1,25 @@
+import { useAuthContext } from "../hooks/useAuthContext"
 import { useBPContext } from "../hooks/useBPEntriesContext"
 import { format } from 'date-fns'
 
 const BPDetails = ({battingPractice}) => {
 
-const { dispatch }  = useBPContext()
+const { dispatch } = useBPContext()
+const { user } = useAuthContext()
+
+
 
   const handleClick = async () => {
+    if(!user) {
+      return 
+    }
+
     const response = await fetch('/api/bp-data/' + battingPractice._id, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers:{
+        'Authorization':`Bearer ${user.token}`,
+
+      }
     })
 
     const json = await response.json()
