@@ -81,27 +81,19 @@ const createBattingPractice = async (req, res) => {
 
 // delete bp
 const deleteBattingPractice = async (req, res) => {
-    try {
-      const { id } = req.params;
-      const user_id = req.user._id;
-      if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: "No such batting practice" });
-      }
-      // Find the batting practice entry
-      const battingPractice = await BPWorkout.findById(id);
-      if (!battingPractice) {
-        return res.status(404).json({ error: "No such batting practice" });
-      }
-      // Get the current user
-      const user = await User.findById(user_id);
-      // Check if the user is the creator of the entry or an admin
-      if (battingPractice.user_id.toString() !== user_id.toString() && !user.isAdmin) {
-        return res.status(403).json({ error: "You do not have permission to delete this entry" });
-      }
-  } catch {
-    return res.status(400).json({error:"No such batting practice"})
+  const { id } = req.params
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({error: 'No such workout'})
   }
+  const battingPractice = await BPWorkout.findOneAndDelete({_id: id})
+
+  if (!battingPractice) {
+    return res.status(400).json({error: 'No such workout'})
+  }
+  res.status(200).json(battingPractice)
 }
+ 
 
 // edit bp
 const updateBattingPracitce = async (req, res) => {
