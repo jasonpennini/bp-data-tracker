@@ -17,14 +17,14 @@ const userSchema = new Schema({
   isAdmin: {
     type: Boolean,
     default: false,
-    required: true
+    required: true,
   }
 })
 
 // static signup method
 
 // cannot be arrow function b/c we are using the 'this' keyword
-userSchema.statics.signup = async function (email, password) {
+userSchema.statics.signup = async function (email, password, isAdmin) {
 
   // validation
   if(!email || !password) {
@@ -55,10 +55,8 @@ userSchema.statics.signup = async function (email, password) {
   const salt = await bcrypt.genSalt(10)
   // two args are plain text password, and salt value
   const hash = await bcrypt.hash(password, salt)
-
   // creating a new document in this, which is the DB model, using the email and hashed password.
-  const user = await this.create({email, password:hash})
-
+  const user = await this.create({email, password:hash, isAdmin})
   return user
 }
 
