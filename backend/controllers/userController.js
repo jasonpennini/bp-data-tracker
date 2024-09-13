@@ -3,8 +3,9 @@ const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 
 // id getting passed since it will be part of the payload
-const createToken = (_id) => {
-  return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
+const createToken = (_id, req) => {
+  const {isAdmin} = req.body
+  return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' }, {isAdmin:isAdmin})
 }
 
 // login user
@@ -17,7 +18,7 @@ const loginUser = async (req, res) => {
     // this will create an object user with the email and password form the request on the front end
     // taking the hashed password
     const user = await User.login(email, password)
-    const token = createToken(user._id)
+    const token = createToken(user._id, req)
     return res.status(200).json({email, token})
   } catch (error) {
     // we could have a mongoose error here
@@ -35,7 +36,7 @@ const signupUser = async (req, res) => {
     // taking the hashed password
 
     const user = await User.signup(email, password)
-    const token = createToken(user._id)
+    const token = createToken(user._id, req)
     return res.status(200).json({email, token})
   } catch (error) {
     // we could have a mongoose error here

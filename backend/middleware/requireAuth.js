@@ -28,13 +28,8 @@ const requireAuth = async (req, res, next) => {
       return res.status(401).json({error:"Request is not authorized"})
     }
   }
-
   // authorization field will be a string but we only care about the unique id after bearer
   // 'Bearer df3ljkcvjixco90j3lljx'
 }
-
-
-
-
 
 module.exports = requireAuth
