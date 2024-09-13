@@ -7,8 +7,6 @@ const BPDetails = ({battingPractice}) => {
 const { dispatch } = useBPContext()
 const { user } = useAuthContext()
 
-
-
   const handleClick = async () => {
     if(!user) {
       return 
@@ -18,7 +16,6 @@ const { user } = useAuthContext()
       method: 'DELETE',
       headers:{
         'Authorization':`Bearer ${user.token}`,
-
       }
     })
 

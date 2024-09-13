@@ -16,7 +16,7 @@ const BPEntryForm = () => {
 
   // destructuring using from useAuthContext hook
   const {user} = useAuthContext();
-
+  
   useEffect(() => {
     // Fetch existing players from previous BP entries
     if(bpEntries) {

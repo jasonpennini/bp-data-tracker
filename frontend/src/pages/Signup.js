@@ -6,6 +6,8 @@ const Signup = () => {
   const [password, setPassword] = useState('')
   // destructuring these from the useSignup hook
   const { signup, error, isLoading } = useSignup()
+  const [isAdmin, setIsAdmin] = useState(null)
+
 
 // takes in event object from the submission
 const handleSubmit = async (e) => {
@@ -14,7 +16,7 @@ const handleSubmit = async (e) => {
 
   // invoke signup when submit button is clicked and pass email and password to it
   // this will update current state with whatever email/password the user enters
-  await signup(email, password)
+  await signup(email, password, isAdmin)
 
 }
   return (
@@ -29,6 +31,18 @@ const handleSubmit = async (e) => {
       <input type="password"
       onChange={(e) => setPassword(e.target.value)}
       value={password} />
+      
+      <label> Set up with Admin Previliges? </label>
+      <select
+        id="bpType"
+        onChange={(e) => setIsAdmin(e.target.value === "true")} // Convert to boolean
+        value={isAdmin === null ? '' : isAdmin.toString()} 
+        >
+        <option value=""> Select ... </option>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+
       <button disabled={isLoading}>Sign up</button>
       {error && <div className="error">{error}</div>}
     </form>
