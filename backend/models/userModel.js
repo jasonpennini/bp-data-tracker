@@ -55,6 +55,7 @@ userSchema.statics.signup = async function (email, password, isAdmin) {
   const salt = await bcrypt.genSalt(10)
   // two args are plain text password, and salt value
   const hash = await bcrypt.hash(password, salt)
+
   // creating a new document in this, which is the DB model, using the email and hashed password.
   const user = await this.create({email, password:hash, isAdmin})
   return user
