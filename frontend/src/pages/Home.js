@@ -4,8 +4,10 @@ import { useBPContext } from '../hooks/useBPEntriesContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 //components
-import BPDetails from "../components/BPDetails"
+// import BPDetails from "../components/BPDetails"
 import BPEntryForm from "../components/BPEntryForm"
+import BPTable from '../components/BPTable'
+
 
 const Home = () => {
   // desctructuring off of the useBPContext hook. bpEntries an array of BP Entry objects. 
@@ -40,10 +42,9 @@ const Home = () => {
     return (
       <div className="home">
         <div className="bpWorkout">
-          {/* if BPWorkouts exists map through them and do something*/}
-          {bpEntries && bpEntries.map((battingPractice) => (
-            <BPDetails battingPractice={battingPractice} key={battingPractice._id} />
-          ))}
+          <div className="BPTable">
+            {bpEntries && <BPTable key={bpEntries._id} bpEntries={bpEntries}/>}
+           </div>  
         </div>
         <div className="bpEntryForm">
           <BPEntryForm />
