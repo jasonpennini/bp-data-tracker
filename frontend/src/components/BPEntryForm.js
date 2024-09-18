@@ -4,7 +4,7 @@ import { useAuthContext } from '../hooks/useAuthContext'
 
 const BPEntryForm = () => {
   const { dispatch, bpEntries } = useBPContext()
-  const [bpType, setBPtype] = useState("")
+  const [bpType, setBPtype] = useState([])
   const [date, setDate] = useState("")
   const [maxEV, setMaxEV] = useState("")
   const [contactPercentage, setContactPercentage] = useState("")
@@ -20,10 +20,10 @@ const BPEntryForm = () => {
   useEffect(() => {
     // Fetch existing players from previous BP entries
     if(bpEntries) {
-        const players = [...new Set(bpEntries.map(entry => entry.player))];
-        setExistingPlayers(players);
-    }
-  }, [bpEntries]);
+      const players = [...new Set(bpEntries.map((entry) => entry.player))];
+      setExistingPlayers(players);
+      }
+    }, [bpEntries]);
 
   const handleSubmit = async (e) => {
     //prevents default action of form getting resubmitted
@@ -113,7 +113,7 @@ const BPEntryForm = () => {
         <option value="Coach Thrown BP">Coach Thrown BP</option>
         <option value="Breaking Ball Machine">Breaking Ball Machine</option>
         <option value="High Velo Machine">High Velo Machine</option>
-        <option value="Oppo Round"> Oppo Round </option>
+        <option value="Oppo Round">Oppo Round</option>
       </select>
 
      <label> Date: </label>

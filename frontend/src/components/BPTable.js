@@ -2,19 +2,29 @@ import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import { useBPContext } from '../hooks/useBPEntriesContext';
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const BPTable = ({bpEntries})  => {
-
   const { dispatch } = useBPContext();
-    const handleDelete  = async (_id) => {
+  const {user} = useAuthContext();
+  if(!user) {
+    return 
+  }
+
+  // destructuring using from useAuthContext hook
+
+    const handleDelete  = async (battingPractice) => {
       try {
-      const response = await fetch(`/api/battingpractice/${_id}`, {
-              method: 'DELETE'
-      })
+        const response = await fetch('/api/bp-data/' + battingPractice, {
+          method: 'DELETE',
+          headers: {
+            'Authorization':`Bearer ${user.token}`,
+          }
+        })
+      
         const json = await response.json()
         console.log(json)
         if(response.ok) {
-
         // remove the deleted task from our task array and create a new array without it
         // then update state for tasks to no include the deleted task
         dispatch({ type:'DELETE_BPENTRY', payload:json});
