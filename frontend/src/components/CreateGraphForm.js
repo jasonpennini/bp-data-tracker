@@ -17,7 +17,6 @@ export const CreateGraphForm = ({bpEntries, onFilterData}) => {
 
     const {user} = useAuthContext();
   
-
     const bpTypeOptions = ["Coach Thrown BP", "Breaking Ball Machine", "High Velo Machine", "Oppo Round"];
 
     const handleSubmit = async (e) => {

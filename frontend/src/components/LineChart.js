@@ -23,7 +23,11 @@ useEffect(() => {
   if (bpEntries) {
       const groupedEntriesByDateAndPlayer = bpEntries.reduce((acc, entry) => {
         // reduce method is iterating over each element in the bpEntries array and extracting date and player properties
-          const date = entry.date;
+          const date = new Date(entry.date).toLocaleString('en-US', {
+            month: '2-digit',
+            day: '2-digit',
+            year: '2-digit'
+          });
           const player = entry.player;
           // if the current date does not exists, it's then added to the accumulator object
           if (!acc[date]) {
