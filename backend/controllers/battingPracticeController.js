@@ -4,19 +4,31 @@ const User = require('../models/userModel')
 
 // get all batting practices
 const getAllBattingPractices = async (req, res) => {
+
+ // Extract query parameters from the request
+ const { player, bpType, startDate, endDate } = req.query;
+
+// Define an empty filter object
+let filter = {};
+
+if (player && bpType && startDate && endDate) {
+  filter.player = player;
+  filter.bpType = bpType;
+  filter.date = { $gte: new Date(startDate), $lte: new Date(endDate) }; // Ensure dates are properly formatted
+}
   try { 
     const user_id = req.user.id
     // search the User Model for the current user
     const user = await User.findById(user_id)
     // the current user is an Admin, return all BP
     if(user.isAdmin===true) {
-      const battingPractices = await BPWorkout.find({}).sort({createdAt:-1})
+      const battingPractices = await BPWorkout.find(filter).sort({createdAt:-1})
       return res.status(200).json(battingPractices)
     }
     const battingPractices = await BPWorkout.find({user_id}).sort({createdAt:-1})
     return res.status(200).json(battingPractices)
   } catch(error) {
-    return res.status(400).json({error: error.message})
+    res.status(500).json({ error: 'Failed to fetch BP Entries.' });
   }
 }
 
@@ -46,7 +58,7 @@ const createBattingPractice = async (req, res) => {
   const today = new Date()
   const validMaxEV = maxEV => 0 && maxEV <= 130;
   const validContactPCT = contactPercentage => 0 && contactPercentage <= 100
-  
+
   if(!player) {
     errorFields.push('Player')
   }
@@ -73,6 +85,7 @@ const createBattingPractice = async (req, res) => {
     // the Workout model creates an object to send back to the front end and returns it in json format.
     // adds document to the DB in MongoDB too 
     const battingPractice = await BPWorkout.create({player, bpType, date, maxEV, contactPercentage, user_id})
+    console.log(`new battingPractice Entry added to the DB ${battingPractice}`)
     return res.status(200).json(battingPractice)
   } catch(error) {
     return res.status(400).json({error:error.message})
@@ -82,7 +95,6 @@ const createBattingPractice = async (req, res) => {
 // delete bp
 const deleteBattingPractice = async (req, res) => {
   const { id } = req.params
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({error: 'No such workout'})
   }
