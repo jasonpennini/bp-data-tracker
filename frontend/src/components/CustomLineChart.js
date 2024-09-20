@@ -26,7 +26,7 @@ function CustomLineChart({ filteredData, selectedBpType }) {
             const sortedData = filteredByBpType.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort data by date
             const labels = sortedData.map(entry => 
                 new Date(entry.date).toLocaleDateString('en-US', {
-                    year: 'numeric',
+                    year: '2-digit',
                     month: '2-digit',
                     day: '2-digit'
                 })
