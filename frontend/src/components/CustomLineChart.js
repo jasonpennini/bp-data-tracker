@@ -3,11 +3,6 @@ import { Line } from "react-chartjs-2";
 
 function CustomLineChart({ filteredData, selectedBpType }) {
 
-    console.log(`Selected bpType in CustomLineChart: ${selectedBpType}`);  // Debugging here
-    console.log(`filteredData in CustomLineChart: ${filteredData}`)
-
-    console.log(`filteredData data type`, filteredData)
-
     const [maxEVChartData, setMaxEVChartData] = useState({
         labels: [],
         datasets: []
@@ -19,7 +14,7 @@ function CustomLineChart({ filteredData, selectedBpType }) {
     });
     
     useEffect(() => {
-        if (filteredData && filteredData.length >0) {
+        if (filteredData) {
             const filteredByBpType = filteredData.filter(entry => entry.bpType === selectedBpType);
     
             if (filteredByBpType.length === 0) {
@@ -29,7 +24,14 @@ function CustomLineChart({ filteredData, selectedBpType }) {
             }
     
             const sortedData = filteredByBpType.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort data by date
-            const labels = sortedData.map(entry => entry.date);
+            const labels = sortedData.map(entry => 
+                new Date(entry.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                })
+            );
+
             const maxEVData = filteredByBpType.map(entry => entry.maxEV);
             const contactPercentageData = filteredByBpType.map(entry => entry.contactPercentage);
             const player = sortedData[0].player;

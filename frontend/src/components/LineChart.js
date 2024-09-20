@@ -38,27 +38,6 @@ useEffect(() => {
               maxEV: entry.maxEV,
               contactPercentage: entry.contactPercentage
           });
-          // once we have iterated through every possible combination return the accumulator
-          // acc is an object with keys equal to each date and corresponding values for each player. 
-          // Each player will in turn have a value which is an array of objects. 
-          // Inside each object is maxEV and contactPercentage
-          
-          // For exaxmple:
-          // {
-          //   "03/01/2024": "Blaze Jordan": [{
-          //    "maxEV":111,
-          //    "contactPercentage":100
-          //    }],
-          //    "Gilberto Jimenez": [{
-          //    "maxEV":107,
-          //    "contactPercentage":100
-          //    }],
-          //    "Nick Yorke": [{
-          //    "maxEV":104,
-          //    "contactPercentage":100
-          //    }],
-          //  }
-
           return acc;
           // empty object serves as initial value for the accumulator
       }, {});
@@ -67,6 +46,7 @@ useEffect(() => {
       // taking the accumulator object that is returned when reduce finishes and converting it to an array then sorting it. 
       // sorting here gets the dates in the correct order within the acc object
       const labels = Object.keys(groupedEntriesByDateAndPlayer).sort();
+  
       const playerColors=['red', 'navy','black'];
 
       // Chart for maxEV
@@ -105,6 +85,8 @@ useEffect(() => {
               }
           }
       }
+      
+
       // Updating state with labels and datapoints
       setMaxEVChartData({
           labels: labels,

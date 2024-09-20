@@ -23,7 +23,6 @@ const BPTable = ({bpEntries})  => {
         })
       
         const json = await response.json()
-        console.log(json)
         if(response.ok) {
         // remove the deleted task from our task array and create a new array without it
         // then update state for tasks to no include the deleted task
@@ -65,6 +64,7 @@ const BPTable = ({bpEntries})  => {
   ];
 
   const rows = bpEntries.map((bpEntry, index) => {
+
     const inputDateString = bpEntry.date
     const inputDate = new Date(inputDateString)   
 

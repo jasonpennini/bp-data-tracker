@@ -45,33 +45,28 @@ const Home = () => {
   }, [dispatch, user])
 
   const handleFilterData = (data, bpType) => {
-    console.log(`data inside handleFIlterData of HomeJS${JSON.stringify(data)}`)
-    console.log(`Selected bpType: ${bpType}`);  // Debugging bpType here
     setFilteredData(data);  // Set filtered data
     setSelectedBpType(bpType);  // Set selected BP type
     setShowChart(true); // Show the chart when filtered data is available
   };
 
-  console.log('Filtered Data on HomeJS:', filteredData);
-  console.log('Selected BP Type on HomeJS:', selectedBpType);
-
 return (
   <div className="home">
-      <div className='battingPractices'>
-          <div className="BPTable">
-              {bpEntries && <BPTable key={bpEntries._id} bpEntries={bpEntries}/>}
-          </div>            
-          <br></br>
-          <div>
-              <LineChart bpEntries={bpEntries}/>
-              {showChart && <CustomLineChart filteredData={filteredData} selectedBpType={selectedBpType}/>}
-          </div>
+    <div className='battingPractices'>
+      <div className="BPTable">
+        {bpEntries && <BPTable key={bpEntries._id} bpEntries={bpEntries}/>}
+      </div>            
+      <br></br>
+      <div>
+        <LineChart bpEntries={bpEntries}/>
+        {showChart && <CustomLineChart filteredData={filteredData} selectedBpType={selectedBpType}/>}
       </div>
-          <div>
-            <BPForm />
-            {bpEntries && <CreateGraphForm key={bpEntries._id} bpEntries={bpEntries} onFilterData={handleFilterData}/>}
-          </div>
       </div>
+    <div>
+      <BPForm />
+      {bpEntries && <CreateGraphForm key={bpEntries._id} bpEntries={bpEntries} onFilterData={handleFilterData}/>}
+    </div>
+   </div>
   );
   }
 export default Home

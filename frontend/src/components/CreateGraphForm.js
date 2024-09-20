@@ -37,15 +37,8 @@ export const CreateGraphForm = ({bpEntries, onFilterData}) => {
             return;
         }
 
-        console.log(`player before fetch url ${player}`)
-        console.log(`startdate before fetch url ${startDate}`)
-        console.log(`endDate before fetch url ${endDate}`)
-        console.log(`bpType before fetch url ${bpType}`)
-
-        // Construct the URL for the GET request
+        // Construct the URL for the POST request
         const url = `/api/bp-data/?player=${player}&startDate=${startDate}&endDate=${endDate}&bpType=${bpType}`;
-
-        console.log(`user token before fetch ${user.token}`)
 
         try {
             const response = await fetch(url, {
@@ -53,25 +46,19 @@ export const CreateGraphForm = ({bpEntries, onFilterData}) => {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization':`Bearer ${user.token}`,
-
                 }
             });
-            console.log(`this is response.json immedietely after the fetch ${response.json}`)
             const json = await response.json();
-            console.log(`json response to filtered get req ${JSON.stringify(json)}`)
 
             if (!response.ok) {
                 setError(json.error);
                 setErrorFields(json.errorFields);
             } else {
-                console.log(`about to set filteredData to json ${JSON.stringify(json)}`)
                 setFilteredData(json);
                 setShowChart(true);
-                console.log(bpType)
                 onFilterData(json, bpType);
             }
         } catch (error) {
-            console.error('Error fetching BP Entries:', error);
             setError('Failed to fetch BP Entries.');
         }
     }
