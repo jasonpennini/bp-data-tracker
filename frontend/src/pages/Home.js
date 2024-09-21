@@ -53,6 +53,9 @@ const Home = () => {
 return (
   <div className="home">
     <div className='battingPractices'>
+      <div className="BPEntry">
+      <BPForm />
+      </div>
       <div className="BPTable">
         {bpEntries && <BPTable key={bpEntries._id} bpEntries={bpEntries}/>}
       </div>            
@@ -63,7 +66,6 @@ return (
       </div>
       </div>
     <div>
-      <BPForm />
       {bpEntries && <CreateGraphForm key={bpEntries._id} bpEntries={bpEntries} onFilterData={handleFilterData}/>}
     </div>
    </div>

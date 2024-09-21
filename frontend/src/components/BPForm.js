@@ -110,7 +110,7 @@ const BPForm = () => {
             </select>
            
             <label> Date </label>
-            <div className="inputCalendar" onSubmit={handleSubmit}>
+            <div   className="custom-calendar" onSubmit={handleSubmit}>
               <Calendar calendarType="gregory" onChange={(date) => setDate(date.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', weekStartsOn:0 }))} value={date} className="custom-calendar" />
             </div>
             <label> Max EV </label>
