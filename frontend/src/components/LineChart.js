@@ -5,7 +5,7 @@ import { Chart as ChartJS } from "chart.js/auto";
 function LineChart({ bpEntries }) {
 
 // declaring state variables and setting initial state to an object with two key/value pairs for labels and datasets.
-const [maxEVChartData, setMaxEVChartData] = useState({
+const [exitSpeedChartData, setexitSpeedChartData] = useState({
   labels: [],
   datasets: []
 });
@@ -37,9 +37,9 @@ useEffect(() => {
           if (!acc[date][player]) {
               acc[date][player] = [];
           }
-          // a player's maxEV and contact percentage for a given date is added to accumulator object
+          // a player's exitSpeed and contact percentage for a given date is added to accumulator object
           acc[date][player].push({
-              maxEV: entry.maxEV,
+              exitSpeed: entry.exitSpeed,
               contactPercentage: entry.contactPercentage
           });
           return acc;
@@ -53,10 +53,10 @@ useEffect(() => {
   
       const playerColors=['red', 'navy','black'];
 
-      // Chart for maxEV
-      const maxEVDataSets = [];
-      // maxEVDataSets is an array of objects. Each index represents a player and each player has a property called data.
-      // The data property is an array of datapoints for their maxEV each day. 
+      // Chart for exitSpeed
+      const exitSpeedDataSets = [];
+      // exitSpeedDataSets is an array of objects. Each index represents a player and each player has a property called data.
+      // The data property is an array of datapoints for their exitSpeed each day. 
 
       // [{label: 'Nick Yorke', data: Array(9), backgroundColor: 'red', borderColor: 'red', borderWidth: 2},
       //  {label: 'Blaze Jordan', data: Array(9), backgroundColor: 'navy', borderColor: 'navy', borderWidth: 2},
@@ -69,35 +69,35 @@ useEffect(() => {
           for (const player in playerData) {
             // then we have a nested loop b/c each date could have data for more than one player
             // for each dataPoint within the player array for a given date, 
-              const maxEVs = playerData[player].map(entry => entry.maxEV);
+              const exitSpeeds = playerData[player].map(entry => entry.exitSpeed);
 
-              // If the datasetIndex variable evaluates to -1 it means the queried player is not in the maxEVDataSets array
-              const datasetIndex = maxEVDataSets.findIndex(dataset => dataset.label === player);
-              // If the player does not exist in the maxEVDataSets array,
+              // If the datasetIndex variable evaluates to -1 it means the queried player is not in the exitSpeedDataSets array
+              const datasetIndex = exitSpeedDataSets.findIndex(dataset => dataset.label === player);
+              // If the player does not exist in the exitSpeedDataSets array,
               // we create one and add properties for colors and border. 
               if (datasetIndex === -1) {
-                  maxEVDataSets.push({
+                  exitSpeedDataSets.push({
                       label: player,
-                      data: maxEVs,
-                      backgroundColor: playerColors[maxEVDataSets.length % playerColors.length],
-                      borderColor: playerColors[maxEVDataSets.length % playerColors.length],
+                      data: exitSpeeds,
+                      backgroundColor: playerColors[exitSpeedDataSets.length % playerColors.length],
+                      borderColor: playerColors[exitSpeedDataSets.length % playerColors.length],
                       borderWidth: 2
                   });
               } else {
-              // If the player exists, update the data property by adding the current date's maxEV field to the data array
-                  maxEVDataSets[datasetIndex].data = maxEVDataSets[datasetIndex].data.concat(maxEVs);
+              // If the player exists, update the data property by adding the current date's exitSpeed field to the data array
+                  exitSpeedDataSets[datasetIndex].data = exitSpeedDataSets[datasetIndex].data.concat(exitSpeeds);
               }
           }
       }
       
 
       // Updating state with labels and datapoints
-      setMaxEVChartData({
+      setexitSpeedChartData({
           labels: labels,
-          datasets: maxEVDataSets
+          datasets: exitSpeedDataSets
       });
 
-      // Chart for contactPercentage will follow the same logic as maxEV except using contactPercentage data
+      // Chart for contactPercentage will follow the same logic as exitSpeed except using contactPercentage data
       const contactPercentageDataSets = [];
       for (const date of labels) {
           const playerData = groupedEntriesByDateAndPlayer[date];
@@ -124,15 +124,15 @@ useEffect(() => {
   }
   // The below dependency array tells react only run the useEffect hook when there are changes to bpEntries. 
   // When bpEntries changes run the useEffect hook which updates state for setContactPercentageChartData and 
-  // setMaxEVChartData with the newest data point. 
+  // setexitSpeedChartData with the newest data point. 
 }, [bpEntries]);
 
-      // creating an object for options that will be applied to maxEV chart
-      const maxEVOptions = {
+      // creating an object for options that will be applied to exitSpeed chart
+      const exitSpeedOptions = {
         plugins: {
             title: {
                 display: true,
-                text: 'MaxEV in MPH',
+                text: 'exitSpeed in MPH',
                 size: 50
             }
         },
@@ -178,7 +178,7 @@ useEffect(() => {
       // they count as one expression. If there was no fragment, they would count as two expressions.    
       <>
         <div style={chartContainerStyle}>
-          <Line data={maxEVChartData} options={maxEVOptions}/>
+          <Line data={exitSpeedChartData} options={exitSpeedOptions}/>
         </div>
         <div style={chartContainerStyle}>
           <Line data={contactPercentageChartData} options={contactPercentageOptions}/>

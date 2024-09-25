@@ -106,19 +106,41 @@ input.error {
   display: flex;
   align-items: center;
 }
-nav a {
-  margin-left: 10px;
+
+.navbar-nav {
+  display: flex; /* Ensure nav items are displayed in a row */
 }
-nav button {
-  background: #fff;
-  color: var(--primary);
-  border: 2px solid var(--primary);
-  padding: 6px 10px;
-  border-radius: 4px;
-  font-family: "Poppins";
-  cursor: pointer;
-  font-size: 1em;
-  margin-left: 5px;
+
+.nav-item {
+  margin-left: 10px; /* Space between nav items */
+}
+
+.dropdown-item {
+  padding: 10px 15px; /* Ensure dropdown items have consistent padding */
+}
+
+form .form-control {
+  width: auto; /* Allow the input to size correctly */
+}
+
+.auth-buttons {
+  display: flex; /* Align auth buttons in a row */
+  align-items: center; /* Center vertically */
+}
+
+.auth-buttons .btn-link {
+  color: var(--primary); /* Match primary color */
+}
+
+.auth-buttons .btn {
+  margin-left: 10px; /* Space between buttons */
+}
+
+.navbar .btn {
+  margin-left: 5px; /* Adjust margin as needed */
+  border-radius: 4px; /* Consistent border radius */
+  font-family: "Poppins"; /* Consistent font family */
+  font-size: 1em; /* Consistent font size */
 }
 /* auth forms */
 form.signup, form.login {
@@ -129,8 +151,27 @@ form.signup, form.login {
   border-radius: 4px;
 }
 form select {
-  margin-bottom:25px;
-  display:block
+  display:block;
+  padding: 20px;
+}
+.d-flex{
+  margin-left: 5px;
+  margin-top: 4px;
+}
+.userLogin .btn {
+  margin-bottom: 15px;
+}
+.btn {
+  height: 50px;
+  padding: 4px;
+  margin-top: 10px;
+  margin-right: 5px;
+}
+.form-control{
+  height: 50px;
+  border: 2px solid #eae7e7;
+  padding: 6px 10px;
+  border-radius: 4px;
 }
 .custom-calendar {
   background-color: white; /* Ensure background is white */

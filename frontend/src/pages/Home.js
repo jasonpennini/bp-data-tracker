@@ -9,7 +9,7 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import BPTable from '../components/BPTable'
 import LineChart from '../components/LineChart';
 import CustomLineChart from '../components/CustomLineChart';
-import BPForm from '../components/BPForm';
+// import BPForm from '../components/BPForm';
 import CreateGraphForm from '../components/CreateGraphForm';
 
 const Home = () => {
@@ -53,9 +53,6 @@ const Home = () => {
 return (
   <div className="home">
     <div className='battingPractices'>
-      <div className="BPEntry">
-      <BPForm />
-      </div>
       <div className="BPTable">
         {bpEntries && <BPTable key={bpEntries._id} bpEntries={bpEntries}/>}
       </div>            

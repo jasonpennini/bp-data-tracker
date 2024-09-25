@@ -3,17 +3,25 @@ import { useBPContext } from '../hooks/useBPEntriesContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 const BPEntryForm = () => {
-  const { dispatch, bpEntries } = useBPContext()
+  // form state variables
+  const [angle , setAngle] = useState('')
+  const [distance, setDistance] = useState('')
+  const [autoPitchType, setAutoPitchType] = useState('')
+  const [direction, setDirection] = useState('')
   const [bpType, setBPtype] = useState([])
-  const [date, setDate] = useState("")
-  const [maxEV, setMaxEV] = useState("")
-  const [contactPercentage, setContactPercentage] = useState("")
+  const [date, setDate] = useState('')
+  const [exitSpeed, setexitSpeed] = useState('')
+  const [contactPercentage, setContactPercentage] = useState('')
+  const [pitchCall, setPitchCall] = useState('')
+
+  const { dispatch, bpEntries } = useBPContext()
+  // other state varibles
   const [error, setError] = useState("")
   const [errorFields, setErrorFields] = useState([])
   const [selectedPlayer, setSelectedPlayer] = useState('')
   const [newPlayer, setNewPlayer] = useState('')
   const [existingPlayers, setExistingPlayers] = useState([])
-
+ 
   // destructuring using from useAuthContext hook
   const {user} = useAuthContext();
   
@@ -37,7 +45,7 @@ const BPEntryForm = () => {
     const player = selectedPlayer || newPlayer
 
     //creating a dummy object to be sent as apart of our response 
-    const bpEntry = { player, bpType, date, maxEV, contactPercentage }
+    const bpEntry = { player, bpType, date, exitSpeed, contactPercentage, angle, direction, distance, autoPitchType, pitchCall }
 
     // fetching data from the front end with a post
     const response = await fetch('/api/bp-data', {
@@ -60,7 +68,7 @@ const BPEntryForm = () => {
       console.log('new bp entry added', json)
       setSelectedPlayer('');
       setNewPlayer('');
-      setMaxEV('')
+      setexitSpeed('')
       setContactPercentage('')
       setDate('')
       setBPtype('')
@@ -110,10 +118,10 @@ const BPEntryForm = () => {
         className={errorFields.includes('BP Type') ? 'error' : ''}
         >
         <option value=""> Select ... </option>
-        <option value="Coach Thrown BP">Coach Thrown BP</option>
-        <option value="Breaking Ball Machine">Breaking Ball Machine</option>
-        <option value="High Velo Machine">High Velo Machine</option>
-        <option value="Oppo Round">Oppo Round</option>
+        <option value="Coach Pitch">Coach Pitch</option>
+        <option value="Black Box">Black Box</option>
+        <option value="High Velocity">High Velocity</option>
+        <option value="Situational">Situational</option>
       </select>
 
      <label> Date: </label>
@@ -127,8 +135,8 @@ const BPEntryForm = () => {
       <label> Max EV: </label>
       <input 
       type="number"
-      onChange={(e)=> setMaxEV(e.target.value)}
-      value={maxEV}
+      onChange={(e)=> setexitSpeed(e.target.value)}
+      value={exitSpeed}
       className = {errorFields.includes('Max EV') ? 'error' : ''}
       placeholder="From 0-130 mph"
       />
@@ -140,6 +148,14 @@ const BPEntryForm = () => {
       value={contactPercentage}
       className = {errorFields.includes('Contact Percentage') ? 'error' : ''}
       placeholder="From 0-100%"
+      />
+
+      <label> Angle: </label>
+      <input 
+      type="number"
+      onChange={(e)=> setAngle(e.target.value)}
+      value={contactPercentage}
+      className = {errorFields.includes('Angle') ? 'error' : ''}
       />
 
       <button> Add BP Entry </button>

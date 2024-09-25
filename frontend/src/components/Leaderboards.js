@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import { useBPContext } from '../hooks/useBPEntriesContext';
 import { useAuthContext } from '../hooks/useAuthContext'
 
-const BPTable = ({bpEntries})  => {
+const Leaderboards = ({bpEntries})  => {
   const { dispatch } = useBPContext();
   const {user} = useAuthContext();
   if(!user) {
@@ -42,7 +42,7 @@ const BPTable = ({bpEntries})  => {
     { field: '_id', headerName: 'BP Event ID', width:220, },
     { field: 'bpType', headerName: 'BP Type', sortable: true, width: 175,},
     { field: 'date', headerName: 'Date', sortable: true, width: 130,},
-    { field: 'exitSpeed', headerName: 'Exit Speed', width: 130, type:'number', sortable:true, },
+    { field: 'exitSpeed', headerName: 'Max Exit Velo', width: 130, type:'number', sortable:true, },
     { field: 'contactPercentage', headerName: 'Contact %', width: 130, },
     {
       field: 'actions',
@@ -97,4 +97,4 @@ return (
 );
 }
     
-export default BPTable
+export default Leaderboards

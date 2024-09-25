@@ -17,7 +17,7 @@ export const CreateGraphForm = ({bpEntries, onFilterData}) => {
 
     const {user} = useAuthContext();
   
-    const bpTypeOptions = ["Coach Thrown BP", "Breaking Ball Machine", "High Velo Machine", "Oppo Round"];
+    const bpTypeOptions = ["Coach Pitch", "Black Box", "High Velocity", "Situational"];
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -96,19 +96,19 @@ export const CreateGraphForm = ({bpEntries, onFilterData}) => {
             <label>Start Date</label>
             <div className="startDate">
                 <Calendar 
-                    calendarType="gregory" 
-                    onChange={(date) => setStartDate(date.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }))} 
-                    value={startDate} 
-                    className="custom-calendar" 
+                  calendarType="gregory" 
+                  onChange={(date) => setStartDate(date.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }))} 
+                  value={startDate} 
+                  className="custom-calendar" 
                 />
             </div>
             <label>End Date</label>
             <div className="endDate">
                 <Calendar 
-                    calendarType="gregory" 
-                    onChange={(date) => setEndDate(date.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }))} 
-                    value={endDate} 
-                    className="custom-calendar" 
+                  calendarType="gregory" 
+                  onChange={(date) => setEndDate(date.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }))} 
+                  value={endDate} 
+                  className="custom-calendar" 
                 />
             </div>
             <button>Create BP Chart</button>

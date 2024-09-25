@@ -3,7 +3,7 @@ import { Line } from "react-chartjs-2";
 
 function CustomLineChart({ filteredData, selectedBpType }) {
 
-    const [maxEVChartData, setMaxEVChartData] = useState({
+    const [exitSpeedChartData, setexitSpeedChartData] = useState({
         labels: [],
         datasets: []
     });
@@ -32,17 +32,17 @@ function CustomLineChart({ filteredData, selectedBpType }) {
                 })
             );
 
-            const maxEVData = filteredByBpType.map(entry => entry.maxEV);
+            const exitSpeedData = filteredByBpType.map(entry => entry.exitSpeed);
             const contactPercentageData = filteredByBpType.map(entry => entry.contactPercentage);
             const player = sortedData[0].player;
             const bpType = sortedData[0].bpType;
     
-            setMaxEVChartData({
+            setexitSpeedChartData({
                 labels: labels,
                 datasets: [
                     {
-                        label: `${player} MaxEV ${bpType}`,
-                        data: maxEVData,
+                        label: `${player} exitSpeed ${bpType}`,
+                        data: exitSpeedData,
                         fill: false,
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgba(255, 99, 132, 0.5)',
@@ -67,7 +67,7 @@ function CustomLineChart({ filteredData, selectedBpType }) {
 
 
     // Define chart options
-    const maxEVChartOptions = {
+    const exitSpeedChartOptions = {
         plugins: {
             title: {
                 display: true,
@@ -116,7 +116,7 @@ function CustomLineChart({ filteredData, selectedBpType }) {
         <div>
             <div style={{ display: 'flex' }}>
                 <div style={chartContainerStyle}>
-                    <Line data={maxEVChartData} options ={maxEVChartOptions} />
+                    <Line data={exitSpeedChartData} options ={exitSpeedChartOptions} />
                 </div>
                 <div style={chartContainerStyle}>
                     <Line data={contactPercentageChartData} options ={contactPercentageVChartOptions} />
