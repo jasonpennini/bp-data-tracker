@@ -3,16 +3,15 @@ import { useBPContext } from '../hooks/useBPEntriesContext'
 import Calendar from 'react-calendar';
 import { useAuthContext } from '../hooks/useAuthContext'
 
-const BPEntryForm = () => {
+const EditBPEntry = () => {
     const { dispatch, bpEntries } = useBPContext(); // Assuming you have access to previous BP entries from context
-
 
    // form state variables
   const [angle , setAngle] = useState('')
   const [distance, setDistance] = useState('')
   const [autoPitchType, setAutoPitchType] = useState('')
   const [direction, setDirection] = useState('')
-  const [bpType, setBPType] = useState([])
+  const [bpType, setBPType] = useState('')
   const [date, setDate] = useState('')
   const [exitSpeed, setExitSpeed] = useState('')
   const [contactPercentage, setContactPercentage] = useState('')
@@ -187,4 +186,4 @@ const BPEntryForm = () => {
     )
 }
 
-export default BPEntryForm
+export default EditBPEntry

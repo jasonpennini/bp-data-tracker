@@ -27,7 +27,7 @@ export const BPContextProvider = ({children}) => {
 
 // useReducer differes fro
   const [state, dispatch] = useReducer(battingPracticeReducer, {
-    bpEntries:null
+    bpEntries:[]
   })
 
   return (

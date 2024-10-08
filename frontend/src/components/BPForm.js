@@ -39,7 +39,7 @@ const BPForm = () => {
 
         const bpEntry = { player, bpType, date, exitSpeed, contactPercentage };
 
-        const response = await fetch('/api/bp-data', {
+        const response = await fetch('/bp-data', {
             method: 'POST',
             body: JSON.stringify(bpEntry),
             headers: {

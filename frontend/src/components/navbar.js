@@ -1,29 +1,15 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
-import { useState } from 'react';
 
 const Navbar = () => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
-  const [bpType, setBpType] = useState('');
-  const navigate = useNavigate();
 
   const handleClick = () => {
     logout();
   };
 
-  const handleTypeSelect = (type) => {
-    setBpType(type);
-    navigate(`/leaderboards/${type}`);
-    
-    fetch(`/api/bp-practices?bpType=${type}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('BP Practices:', data);
-      })
-      .catch((error) => console.error('Error fetching BP Practices:', error));
-  };
 
   return (
     <header>
@@ -38,9 +24,9 @@ const Navbar = () => {
                 <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle" href="/bpUpload" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Data Input</a>
                   <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><Link to="/datainput/bpEntry" className="dropdown-item">Manual Entry</Link></li>
-                    <li><Link to="/datainput/csv" className="dropdown-item">CSV Upload</Link></li>
-                    <li><Link to="/datainput/edit" className="dropdown-item">Edit BP Entry</Link></li>
+                    <li><Link to="/data-input/csv" className="dropdown-item">CSV Upload</Link></li>
+                    <li><Link to="/navbar/data-input/bpentry" className="dropdown-item">Manual BP Entry</Link></li>
+                    <li><Link to="/data-input/edit" className="dropdown-item">Edit BP Entry</Link></li>
                   </ul>
                 </li>
                 <li className="nav-item">
@@ -49,11 +35,7 @@ const Navbar = () => {
                 <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle" href="/leaderboards" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Max EV Leaderboards</a>
                   <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li>
-                      <button onClick={() => handleTypeSelect('coachpitch')} className="dropdown-item">
-                        Coach Pitch
-                      </button>
-                    </li>
+                    <li><Link to="/leaderboards/coachpitch" className="dropdown-item">Coach Pitch</Link></li>
                     <li><Link to="/leaderboards/blackbox" className="dropdown-item">Blackbox</Link></li>
                     <li><Link to="/leaderboards/highvelocity" className="dropdown-item">High Velocity</Link></li>
                     <li><Link to="/leaderboards/situational" className="dropdown-item">Situational</Link></li>

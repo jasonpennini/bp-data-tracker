@@ -8,7 +8,7 @@ const BPEntryForm = () => {
   const [distance, setDistance] = useState('')
   const [autoPitchType, setAutoPitchType] = useState('')
   const [direction, setDirection] = useState('')
-  const [bpType, setBPtype] = useState([])
+  const [bpType, setBPtype] = useState('')
   const [date, setDate] = useState('')
   const [exitSpeed, setexitSpeed] = useState('')
   const [contactPercentage, setContactPercentage] = useState('')
@@ -46,9 +46,9 @@ const BPEntryForm = () => {
 
     //creating a dummy object to be sent as apart of our response 
     const bpEntry = { player, bpType, date, exitSpeed, contactPercentage, angle, direction, distance, autoPitchType, pitchCall }
-
     // fetching data from the front end with a post
-    const response = await fetch('/api/bp-data', {
+    console.log(bpEntry)
+    const response = await fetch('/navbar/data-input/bpentry', {
       method:'POST',
       body: JSON.stringify(bpEntry),
       headers:{
@@ -58,6 +58,7 @@ const BPEntryForm = () => {
     })
     // storing json response from back end, if the response is an error update the error state
     const json = await response.json()
+    console.log(json)
     if(!response.ok) {
       setError(json.error)
       setErrorFields(json.errorFields)

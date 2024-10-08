@@ -6,9 +6,15 @@ import Home from './pages/Home'
 import Navbar from './components/navbar'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import BPEntryForm from './pages/BPEntry'
+import BPEntryForm from './pages/BPEntryForm.js'
 import Leaderboards from './components/Leaderboards.js'
 import CSVUpload from './pages/CSVUpload.js'
+import CustomChart from './pages/Custom-Report.js'
+import MaxEVBlackbox from './pages/MaxEVBlackbox.js'
+import MaxEVCoachPitch from './pages/MaxEVCoachPitch.js'
+import MaxEVHighVelo from './pages/MaxEVHighVelo.js'
+import MaxEVSituational from './pages/MaxEVSituational.js'
+
 
 function App() {
   const { user } = useAuthContext()
@@ -23,9 +29,13 @@ function App() {
             <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
             <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
             <Route path="/leaderboards/:bpType" element={<Leaderboards />} />
-            <Route path="/datainput/bpentry" element={<BPEntryForm />}/>
-            <Route path="/datainput/csv" element={<CSVUpload />}/>
-
+            <Route path="/navbar/data-input/bpentry" element={<BPEntryForm />}/>
+            <Route path="/data-input/csv" element={<CSVUpload />}/>
+            <Route path="/custom-reports" element={<CustomChart />}/>
+            <Route path="/leaderboards/blackbox" element={<MaxEVBlackbox />}/>
+            <Route path="/leaderboards/situational" element={<MaxEVSituational />}/>
+            <Route path="/leaderboards/highvelocity" element={<MaxEVHighVelo />}/>
+            <Route path="/leaderboards/coachpitch" element={<MaxEVCoachPitch />}/>
           </Routes>
         </div> 
       </BrowserRouter>

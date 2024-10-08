@@ -4,15 +4,10 @@ import { useBPContext } from '../hooks/useBPEntriesContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 
 //components
-// import BPDetails from "../components/BPDetails"
-// import BPEntryForm from "../components/BPEntryForm"
-import BPTable from '../components/BPTable'
-import LineChart from '../components/LineChart';
 import CustomLineChart from '../components/CustomLineChart';
-// import BPForm from '../components/BPForm';
 import CreateGraphForm from '../components/CreateGraphForm';
 
-const Home = () => {
+const CustomChart = () => {
   // desctructuring off of the useBPContext hook. bpEntries an array of BP Entry objects. 
   // dispatch will be the function that executes the switch/case statements to update the bpEntries object on BPContext.js
   const { bpEntries, dispatch } = useBPContext()
@@ -44,19 +39,24 @@ const Home = () => {
     }
   }, [dispatch, user])
 
+  const handleFilterData = (data, bpType) => {
+    setFilteredData(data);  // Set filtered data
+    setSelectedBpType(bpType);  // Set selected BP type
+    setShowChart(true); // Show the chart when filtered data is available
+  };
+
 return (
   <div className="home">
     <div className='battingPractices'>
-      <div className="BPTable">
-        {bpEntries && <BPTable key={bpEntries._id} bpEntries={bpEntries}/>}
-      </div>            
-      <br></br>
+      
       <div>
-        <LineChart bpEntries={bpEntries}/>
         {showChart && <CustomLineChart filteredData={filteredData} selectedBpType={selectedBpType}/>}
       </div>
     </div>
-  </div>
+      <div>
+        {bpEntries && <CreateGraphForm key={bpEntries._id} bpEntries={bpEntries} onFilterData={handleFilterData}/>}
+      </div>
+   </div>
   );
-}
-export default Home
+  }
+export default CustomChart
