@@ -82,6 +82,7 @@ const BPTable = ({bpEntries})  => {
       date: dateFormatted,
       exitSpeed: bpEntry.exitSpeed,
       contactPercentage: bpEntry.contactPercentage,
+      
     }
   });
   
