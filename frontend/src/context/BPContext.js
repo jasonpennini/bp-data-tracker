@@ -25,7 +25,6 @@ export const battingPracticeReducer = (state, action) => {
 // the children prop draws from App on the index.js file which is what BattingPracticeContext wraps around
 export const BPContextProvider = ({children}) => {
 
-// useReducer differes fro
   const [state, dispatch] = useReducer(battingPracticeReducer, {
     bpEntries:[]
   })

@@ -30,9 +30,13 @@ useEffect(() => {
     const json = await response.json()
     // If the json array of objects is returned succesfully, then update state with it. 
     // I.e. BP Workouts will be set to the json array of objects.
-    if (response.ok) {
-      dispatch({type:'SET_BPENTRIES', payload: json})
-    }
+
+   // Filter bpEntries to include only those with bpType equal to "High Velo"
+   const filteredEntries = json.filter(entry => entry.bpType === 'High Velo')
+
+   if (response.ok) {
+     dispatch({type:'SET_BPENTRIES', payload: filteredEntries})
+   }
   }
   if(user) {
     fetchBPWorkouts()

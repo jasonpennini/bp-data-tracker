@@ -4,7 +4,8 @@ import Calendar from 'react-calendar';
 import { useAuthContext } from '../hooks/useAuthContext'
 
 const BPEntryForm = () => {
-    const { dispatch, bpEntries } = useBPContext(); // Assuming you have access to previous BP entries from context
+  const { dispatch, bpEntries } = useBPContext(); // Assuming you have access to previous BP entries from context
+  console.log(bpEntries)
 
    // form state variables
   const [angle , setAngle] = useState('')
@@ -55,9 +56,7 @@ const handleSubmit = async (e) => {
             'Authorization':`Bearer ${user.token}`,
         },
     });
-    console.log(response)
     const json = await response.json();
-    console.log(json)
     if (!response.ok) {
         setError(json.error);
         setErrorFields(json.errorFields)

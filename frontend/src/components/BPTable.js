@@ -11,8 +11,6 @@ const BPTable = ({bpEntries})  => {
     return 
   }
 
-  console.log(bpEntries[0])
-
   // destructuring using from useAuthContext hook
 
     const handleDelete  = async (battingPractice) => {
