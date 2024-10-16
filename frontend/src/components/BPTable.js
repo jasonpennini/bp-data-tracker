@@ -11,6 +11,8 @@ const BPTable = ({bpEntries})  => {
     return 
   }
 
+  console.log(bpEntries[0])
+
   // destructuring using from useAuthContext hook
 
     const handleDelete  = async (battingPractice) => {
@@ -44,6 +46,10 @@ const BPTable = ({bpEntries})  => {
     { field: 'date', headerName: 'Date', sortable: true, width: 130,},
     { field: 'exitSpeed', headerName: 'Exit Speed', width: 130, type:'number', sortable:true, },
     { field: 'contactPercentage', headerName: 'Contact %', width: 130, },
+    { field: 'distance', headerName: 'Distance', width: 130, },
+    { field: 'angle', headerName: 'Angle', width: 130, },
+    { field: 'pitchType', headerName: 'PitchType', width: 130, },
+
     {
       field: 'actions',
       headerName: 'Actions',
@@ -82,7 +88,9 @@ const BPTable = ({bpEntries})  => {
       date: dateFormatted,
       exitSpeed: bpEntry.exitSpeed,
       contactPercentage: bpEntry.contactPercentage,
-      
+      distance: bpEntry.distance,
+      angle: bpEntry.angle,
+      pitchType: bpEntry.autoPitchType,
     }
   });
   
