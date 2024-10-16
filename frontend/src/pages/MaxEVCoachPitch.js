@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 // hook provides us with dispatch function and state object
 import { useBPContext } from '../hooks/useBPEntriesContext'
 import { useAuthContext } from '../hooks/useAuthContext'

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 // hook provides us with dispatch function and state object
 import { useBPContext } from '../hooks/useBPEntriesContext'
 import { useAuthContext } from '../hooks/useAuthContext'
@@ -32,7 +32,7 @@ useEffect(() => {
     // I.e. BP Workouts will be set to the json array of objects.
 
     // Filter bpEntries to include only those with bpType equal to "Black Box"
-    const filteredEntries = json.filter(entry => entry.bpType === 'Black Box')
+    const filteredEntries = json.filter(entry => entry.bpType === 'Blackbox')
 
     if (response.ok) {
       dispatch({type:'SET_BPENTRIES', payload: filteredEntries})

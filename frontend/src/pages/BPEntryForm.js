@@ -16,7 +16,6 @@ const BPEntryForm = () => {
   const [date, setDate] = useState('')
   const [exitSpeed, setExitSpeed] = useState('')
   const [contactPercentage, setContactPercentage] = useState('')
-  const [pitchCall, setPitchCall] = useState('')
 
   const [selectedPlayer, setSelectedPlayer] = useState('');
   const [newPlayer, setNewPlayer] = useState('');
@@ -46,8 +45,9 @@ const handleSubmit = async (e) => {
 
     const player = selectedPlayer || newPlayer;
 
-    const bpEntry = { player, bpType, date, exitSpeed, contactPercentage, angle, direction, distance, autoPitchType, pitchCall }
+    const bpEntry = { player, bpType, date, exitSpeed, contactPercentage, angle, direction, distance, autoPitchType }
     console.log('before fetch and post request to bpEntry')
+    console.log(bpEntry)
     const response = await fetch('/navbar/data-input/bpentry', {
         method: 'POST',
         body: JSON.stringify(bpEntry),
@@ -166,7 +166,7 @@ return (
             id="autoPitchType"
             onChange={(e)=> setAutoPitchType(e.target.value)}
             value={autoPitchType}
-            className={errorFields.includes('Auto Pitch Type') ? 'error' : ''}
+            className={errorFields.includes('Pitch Type') ? 'error' : ''}
             >
           <option value=""> Select ... </option>
           <option value="Sinker">Sinker</option>
