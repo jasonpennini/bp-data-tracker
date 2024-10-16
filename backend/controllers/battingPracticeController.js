@@ -5,6 +5,7 @@ const User = require('../models/userModel')
 // get all batting practices
 const getAllBattingPractices = async (req, res) => {
 
+  console.log(`fetching all bps ${req}`)
  // Extract query parameters from the request
  const { player, bpType, startDate, endDate } = req.query;
 
@@ -48,16 +49,24 @@ const getOneBattingPractice = async(req, res) => {
 
 // create new bp
 const createBattingPractice = async (req, res) => {
+  console.log('in createBattingPractice Controller')
+
   // we know req.user exists since we will never hit this line of code without passing through the autorization middlware first
   const user_id = req.user._id
 
-  const {player, bpType, date, maxEV, contactPercentage} = req.body
+  const {player, bpType, date, exitSpeed, contactPercentage, angle, direction, distance, autoPitchType } = req.body
+
+  console.log(`auto pitch type inside createBatting Practice controller after destructure off req.body ${autoPitchType}`)
+  console.log(`distance inside createBatting Practice controller after destructure off req.body ${distance}`)
 
   let errorFields = []
   const inputDate = new Date(date);
   const today = new Date()
-  const validMaxEV = maxEV => 0 && maxEV <= 130;
+  const validExitSpeed = exitSpeed => 0 && exitSpeed <= 130;
   const validContactPCT = contactPercentage => 0 && contactPercentage <= 100
+  const validAngle = angle => 0 && angle <= 360
+  const validDirection = direction => 0 && direction <= 360
+  const validDistance = distance => 0 && distance <= 600
 
   if(!player) {
     errorFields.push('Player')
@@ -68,11 +77,23 @@ const createBattingPractice = async (req, res) => {
   if(!date || inputDate > today) {
     errorFields.push('Date')
   }
-  if(!maxEV || !validMaxEV) {
-    errorFields.push('Max EV')
+  if(!exitSpeed || !validExitSpeed) {
+    errorFields.push('Exit Speed')
   }
   if(!contactPercentage || !validContactPCT) {
     errorFields.push('Contact Percentage')
+  }
+  if(!angle || !validAngle)  {
+    errorFields.push("Angle")
+  }
+  if(!direction || !validDirection) {
+    errorFields.push("Direction")
+  }
+  if(!distance || !validDistance) {
+    errorFields.push("Distance")
+  }
+  if(!autoPitchType) {
+    errorFields.push("Pitch Type")
   }
 
   if(errorFields.length>0) {
@@ -84,7 +105,25 @@ const createBattingPractice = async (req, res) => {
     // if the inputs from the UI meet the criteria set in the Schema. If they do
     // the Workout model creates an object to send back to the front end and returns it in json format.
     // adds document to the DB in MongoDB too 
-    const battingPractice = await BPWorkout.create({player, bpType, date, maxEV, contactPercentage, user_id})
+    
+    console.log(`about to try to add entry to database `)
+
+
+    console.log('Creating Batting Practice with:', {
+      player,
+      bpType,
+      date,
+      exitSpeed,
+      contactPercentage,
+      angle,
+      direction,
+      distance,
+      autoPitchType,
+      user_id
+    });
+
+
+    const battingPractice = await BPWorkout.create({player, bpType, date, exitSpeed, contactPercentage, angle, direction, distance, autoPitchType, user_id})
     console.log(`new battingPractice Entry added to the DB ${battingPractice}`)
     return res.status(200).json(battingPractice)
   } catch(error) {

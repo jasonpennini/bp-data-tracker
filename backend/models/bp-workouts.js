@@ -9,15 +9,14 @@ const bpWorkoutSchema = new Schema ({
   },
   bpType: {
     type: String,
-    required:true,
-    
+    required:true, 
   },
   date: {
     type: Date,
-    requried:true,
+    required:true,
     max:Date.now,
   },
-  maxEV: {
+  exitSpeed: {
     type: Number,
     required:true,
     min:0,
@@ -29,10 +28,32 @@ const bpWorkoutSchema = new Schema ({
     min: 0,
     max:100,
   },
+  angle: {
+    type: Number,
+    required:true,
+    min:0,
+    max:360,
+  },
+  direction: {
+    type:Number,
+    required:true,
+    min:0,
+    max:360,
+  },
+  distance: {
+    type:Number,
+    required:true,
+    min:0,
+    max:600,
+  },
+  autoPitchType: {
+    type:String,
+    required:true,
+  }, 
   user_id: {
     type:String,
     required:true,
-  },
+  }
 }, {timestamps: true})
 
 //creates the model based on the schema we created above
