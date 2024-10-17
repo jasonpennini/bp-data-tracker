@@ -22,6 +22,7 @@ const BPEntryForm = () => {
   const [error, setError] = useState(null);
   const [errorFields, setErrorFields] = useState([])
   const [existingPlayers, setExistingPlayers] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
 
   // destructuring using from useAuthContext hook
   const {user} = useAuthContext();
@@ -60,6 +61,7 @@ const handleSubmit = async (e) => {
     if (!response.ok) {
         setError(json.error);
         setErrorFields(json.errorFields)
+        setShowAlert(false)
       }
     if (response.ok) {
         // Reset form fields
@@ -69,9 +71,13 @@ const handleSubmit = async (e) => {
         setDate('');
         setExitSpeed('');
         setContactPercentage('');
+        setDistance('')
+        setAutoPitchType('')
+        setAngle('')
         setError(null);
         dispatch({ type: 'CREATE_BPENTRY', payload: json });
         setErrorFields([]);
+        setShowAlert(true)
     }
 };
 
@@ -180,6 +186,11 @@ return (
 
         <button> Add BP Entry</button>
         {error && <div className='error'>{error}</div>}
+        {showAlert && (
+            <div className="alert alert-success">
+             Entry Posted succesfully
+            </div>
+            )}
     </form>
     )
 }

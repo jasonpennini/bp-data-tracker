@@ -32,7 +32,7 @@ useEffect(() => {
     // I.e. BP Workouts will be set to the json array of objects.
 
    // Filter bpEntries to include only those with bpType equal to "High Velo"
-   const filteredEntries = json.filter(entry => entry.bpType === 'High Velo')
+   const filteredEntries = json.filter(entry => entry.bpType === 'High Velocity')
 
    if (response.ok) {
      dispatch({type:'SET_BPENTRIES', payload: filteredEntries})
