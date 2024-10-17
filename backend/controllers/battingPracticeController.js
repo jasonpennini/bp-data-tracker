@@ -64,8 +64,8 @@ const createBattingPractice = async (req, res) => {
   const today = new Date()
   const validExitSpeed = exitSpeed => 0 && exitSpeed <= 130;
   const validContactPCT = contactPercentage => 0 && contactPercentage <= 100
-  const validAngle = angle => 0 && angle <= 360
-  const validDirection = direction => 0 && direction <= 360
+  const validAngle = angle => -180 && angle <= 180
+  const validDirection = direction => -180 && direction <= 180
   const validDistance = distance => 0 && distance <= 600
 
   if(!player) {

@@ -31,14 +31,14 @@ const bpWorkoutSchema = new Schema ({
   angle: {
     type: Number,
     required:true,
-    min:0,
-    max:360,
+    min:-180,
+    max:180,
   },
   direction: {
     type:Number,
     required:true,
-    min:0,
-    max:360,
+    min:-180,
+    max:180,
   },
   distance: {
     type:Number,
