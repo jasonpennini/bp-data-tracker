@@ -11,7 +11,6 @@ const BPEntryForm = () => {
   const [bpType, setBPtype] = useState('')
   const [date, setDate] = useState('')
   const [exitSpeed, setexitSpeed] = useState('')
-  const [contactPercentage, setContactPercentage] = useState('')
   const [pitchCall, setPitchCall] = useState('')
 
   const { dispatch, bpEntries } = useBPContext()
@@ -45,7 +44,7 @@ const BPEntryForm = () => {
     const player = selectedPlayer || newPlayer
 
     //creating a dummy object to be sent as apart of our response 
-    const bpEntry = { player, bpType, date, exitSpeed, contactPercentage, angle, direction, distance, autoPitchType, pitchCall }
+    const bpEntry = { player, bpType, date, exitSpeed, angle, direction, distance, autoPitchType, pitchCall }
     // fetching data from the front end with a post
     console.log(bpEntry)
     const response = await fetch('/navbar/data-input/bpentry', {
@@ -70,9 +69,10 @@ const BPEntryForm = () => {
       setSelectedPlayer('');
       setNewPlayer('');
       setexitSpeed('')
-      setContactPercentage('')
       setDate('')
       setBPtype('')
+      setDistance('')
+      setDirection('')
       // when dispatch function is invoked it updates the state of the BPEntries Object on BPContext. 
       // It is adding the payload to the array of objects, which is the newly created BPEntry
       // When this happens the Home Component is automatically re-rendered, due to the virtual DOM. It knows a change has been made
@@ -142,20 +142,11 @@ const BPEntryForm = () => {
       placeholder="From 0-130 mph"
       />
 
-      <label> Contact %: </label>
-      <input 
-      type="number"
-      onChange={(e)=> setContactPercentage(e.target.value)}
-      value={contactPercentage}
-      className = {errorFields.includes('Contact Percentage') ? 'error' : ''}
-      placeholder="From 0-100%"
-      />
-
       <label> Angle: </label>
       <input 
       type="number"
       onChange={(e)=> setAngle(e.target.value)}
-      value={contactPercentage}
+      value={angle}
       className = {errorFields.includes('Angle') ? 'error' : ''}
       />
 

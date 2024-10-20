@@ -10,12 +10,6 @@ const [exitSpeedChartData, setexitSpeedChartData] = useState({
   datasets: []
 });
 
-// declaring state variables and setting initial state to an object with two key/value pairs for labels and datasets.
-const [contactPercentageChartData, setContactPercentageChartData] = useState({
-  labels: [],
-  datasets: []
-});
-
 
 useEffect(() => {
   // when bpEntries prop changes, hook is run dynamically with React Virtual DOM, which updates BP Data on Line Charts
@@ -40,7 +34,6 @@ useEffect(() => {
           // a player's exitSpeed and contact percentage for a given date is added to accumulator object
           acc[date][player].push({
               exitSpeed: entry.exitSpeed,
-              contactPercentage: entry.contactPercentage
           });
           return acc;
           // empty object serves as initial value for the accumulator
@@ -97,33 +90,11 @@ useEffect(() => {
           datasets: exitSpeedDataSets
       });
 
-      // Chart for contactPercentage will follow the same logic as exitSpeed except using contactPercentage data
-      const contactPercentageDataSets = [];
-      for (const date of labels) {
-          const playerData = groupedEntriesByDateAndPlayer[date];
-          for (const player in playerData) {
-              const contactPercentages = playerData[player].map(entry => entry.contactPercentage);
-              const datasetIndex = contactPercentageDataSets.findIndex(dataset => dataset.label === player);
-              if (datasetIndex === -1) {
-                  contactPercentageDataSets.push({
-                      label: player,
-                      data: contactPercentages,
-                      backgroundColor: playerColors[contactPercentageDataSets.length % playerColors.length],
-                      borderColor: playerColors[contactPercentageDataSets.length % playerColors.length],
-                      borderWidth: 2
-                  });
-              } else {
-                  contactPercentageDataSets[datasetIndex].data = contactPercentageDataSets[datasetIndex].data.concat(contactPercentages);
-              }
-          }
-      }
-      setContactPercentageChartData({
-          labels: labels,
-          datasets: contactPercentageDataSets
-      });
+     
+     
   }
   // The below dependency array tells react only run the useEffect hook when there are changes to bpEntries. 
-  // When bpEntries changes run the useEffect hook which updates state for setContactPercentageChartData and 
+  // When bpEntries changes run the useEffect hook which updates state for 
   // setexitSpeedChartData with the newest data point. 
 }, [bpEntries]);
 
@@ -145,23 +116,7 @@ useEffect(() => {
         }
       };
 
-      // creating an object for options that will be applied to contactPercentage chart
-      const contactPercentageOptions = {
-        plugins: {
-            title: {
-                display: true,
-                text: 'Contact %',
-                size: 50
-            }
-        },
-        scales: {
-            y: {
-                title: {
-                    display: false
-                }
-            }
-        }
-      };
+     
 
       const chartContainerStyle = {
         border: '1px solid black',
@@ -179,10 +134,7 @@ useEffect(() => {
       <>
         <div style={chartContainerStyle}>
           <Line data={exitSpeedChartData} options={exitSpeedOptions}/>
-        </div>
-        <div style={chartContainerStyle}>
-          <Line data={contactPercentageChartData} options={contactPercentageOptions}/>
-        </div>      
+        </div> 
       </>
     );
 }

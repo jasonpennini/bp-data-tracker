@@ -1,7 +1,8 @@
+import CSVImporter from '../components/CSVImporter'
 
 const CSVUpload = () => {
   return (
-    <h1> Will eventually render a form for updating CSV files </h1>
+    <CSVImporter />
   )
 }
 export default CSVUpload

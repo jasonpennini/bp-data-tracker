@@ -11,7 +11,6 @@ const BPForm = () => {
     const [bpType, setBPType] = useState('');
     const [date, setDate] = useState('');
     const [exitSpeed, setexitSpeed] = useState('');
-    const [contactPercentage, setContactPercentage] = useState('');
     const [error, setError] = useState(null);
     const [errorFields, setErrorFields] = useState([])
     const [existingPlayers, setExistingPlayers] = useState([]);
@@ -37,7 +36,7 @@ const BPForm = () => {
     
         const player = selectedPlayer || newPlayer;
 
-        const bpEntry = { player, bpType, date, exitSpeed, contactPercentage };
+        const bpEntry = { player, bpType, date, exitSpeed};
 
         const response = await fetch('/bp-data', {
             method: 'POST',
@@ -61,7 +60,6 @@ const BPForm = () => {
             setBPType('');
             setDate('');
             setexitSpeed('');
-            setContactPercentage('');
             setError(null);
             dispatch({ type: 'CREATE_BPENTRY', payload: json });
             setErrorFields([]);
@@ -120,15 +118,6 @@ const BPForm = () => {
                 onChange={(e)=> setexitSpeed(e.target.value)}
                 value={exitSpeed}
                 className = {errorFields.includes('Max EV') ? 'error' : ''}
-                />
-            <label> Contact Percentage </label>
-            <input
-                type="number"
-                min="0"
-                max="100"
-                onChange={(e)=> setContactPercentage(e.target.value)}
-                value={contactPercentage}
-                className = {errorFields.includes('Contact Percentage') ? 'error' : ''}
                 />
             <button> Add BP Entry</button>
             {error && <div className='error'>{error}</div>}

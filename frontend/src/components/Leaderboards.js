@@ -43,7 +43,6 @@ const Leaderboards = ({bpEntries})  => {
     { field: 'bpType', headerName: 'BP Type', sortable: true, width: 175,},
     { field: 'date', headerName: 'Date', sortable: true, width: 130,},
     { field: 'exitSpeed', headerName: 'Max Exit Velo', width: 130, type:'number', sortable:true, },
-    { field: 'contactPercentage', headerName: 'Contact %', width: 130, },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -81,7 +80,6 @@ const Leaderboards = ({bpEntries})  => {
       bpType: bpEntry.bpType,
       date: dateFormatted,
       exitSpeed: bpEntry.exitSpeed,
-      contactPercentage: bpEntry.contactPercentage,
     }
   });
   

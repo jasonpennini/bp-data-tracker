@@ -33,8 +33,12 @@ useEffect(() => {
 
     // Filter bpEntries to include only those with bpType equal to "High Velo"
     const filteredEntries = json.filter(entry => entry.bpType === 'Situational')
+
+    const sortedEntries = filteredEntries.sort((a, b) => b.exitSpeed - a.exitSpeed)
+
+    
     if (response.ok) {
-      dispatch({type:'SET_BPENTRIES', payload: filteredEntries})
+      dispatch({type:'SET_BPENTRIES', payload: sortedEntries})
     }
   }
   if(user) {

@@ -14,7 +14,6 @@ const EditBPEntry = () => {
   const [bpType, setBPType] = useState('')
   const [date, setDate] = useState('')
   const [exitSpeed, setExitSpeed] = useState('')
-  const [contactPercentage, setContactPercentage] = useState('')
   const [pitchCall, setPitchCall] = useState('')
 
     const [selectedPlayer, setSelectedPlayer] = useState('');
@@ -44,7 +43,7 @@ const EditBPEntry = () => {
     
         const player = selectedPlayer || newPlayer;
 
-        const bpEntry = { player, bpType, date, exitSpeed, contactPercentage };
+        const bpEntry = { player, bpType, date, exitSpeed };
 
         const response = await fetch('/api/bp-data', {
             method: 'POST',
@@ -68,7 +67,6 @@ const EditBPEntry = () => {
             setBPType('');
             setDate('');
             setExitSpeed('');
-            setContactPercentage('');
             setError(null);
             dispatch({ type: 'CREATE_BPENTRY', payload: json });
             setErrorFields([]);
@@ -128,16 +126,6 @@ const EditBPEntry = () => {
                 value={exitSpeed}
                 className = {errorFields.includes('Max EV') ? 'error' : ''}
                 />
-            <label> Contact Percentage </label>
-            <input
-                type="number"
-                min="0"
-                max="100"
-                onChange={(e)=> setContactPercentage(e.target.value)}
-                value={contactPercentage}
-                className = {errorFields.includes('Contact Percentage') ? 'error' : ''}
-                />
-
             <label> Angle: </label>
             <input 
             type="number"

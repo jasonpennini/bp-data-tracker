@@ -5,7 +5,6 @@ import { useAuthContext } from '../hooks/useAuthContext'
 
 const BPEntryForm = () => {
   const { dispatch, bpEntries } = useBPContext(); // Assuming you have access to previous BP entries from context
-  console.log(bpEntries)
 
    // form state variables
   const [angle , setAngle] = useState('')
@@ -15,7 +14,6 @@ const BPEntryForm = () => {
   const [bpType, setBPType] = useState('')
   const [date, setDate] = useState('')
   const [exitSpeed, setExitSpeed] = useState('')
-  const [contactPercentage, setContactPercentage] = useState('')
 
   const [selectedPlayer, setSelectedPlayer] = useState('');
   const [newPlayer, setNewPlayer] = useState('');
@@ -23,6 +21,9 @@ const BPEntryForm = () => {
   const [errorFields, setErrorFields] = useState([])
   const [existingPlayers, setExistingPlayers] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
+
+  const [recentEntry, setRecentEntry] = useState(null)
+
 
   // destructuring using from useAuthContext hook
   const {user} = useAuthContext();
@@ -46,7 +47,7 @@ const handleSubmit = async (e) => {
 
     const player = selectedPlayer || newPlayer;
 
-    const bpEntry = { player, bpType, date, exitSpeed, contactPercentage, angle, direction, distance, autoPitchType }
+    const bpEntry = { player, bpType, date, exitSpeed, angle, direction, distance, autoPitchType }
     console.log('before fetch and post request to bpEntry')
     console.log(bpEntry)
     const response = await fetch('/navbar/data-input/bpentry', {
@@ -70,14 +71,15 @@ const handleSubmit = async (e) => {
         setBPType('');
         setDate('');
         setExitSpeed('');
-        setContactPercentage('');
         setDistance('')
+        setDirection('')
         setAutoPitchType('')
         setAngle('')
         setError(null);
         dispatch({ type: 'CREATE_BPENTRY', payload: json });
         setErrorFields([]);
         setShowAlert(true)
+        setRecentEntry(json);
     }
 };
 
@@ -133,16 +135,6 @@ return (
             value={exitSpeed}
             className = {errorFields.includes('Max EV') ? 'error' : ''}
             />
-        <label> Contact Percentage </label>
-        <input
-            type="number"
-            min="0"
-            max="100"
-            onChange={(e)=> setContactPercentage(e.target.value)}
-            value={contactPercentage}
-            className = {errorFields.includes('Contact Percentage') ? 'error' : ''}
-            />
-
         <label> Angle: </label>
         <input 
         type="number"
@@ -191,6 +183,19 @@ return (
              Entry Posted succesfully
             </div>
             )}
+          {recentEntry && (
+            <div className="recent-entry">
+              <h4>Recently Added Entry:</h4>
+              <p><strong>Player:</strong> {recentEntry.player}</p>
+              <p><strong>BP Type:</strong> {recentEntry.bpType}</p>
+              <p><strong>Date:</strong> {recentEntry.date}</p>
+              <p><strong>Exit Speed:</strong> {recentEntry.exitSpeed}</p>
+              <p><strong>Angle:</strong> {recentEntry.angle}</p>
+              <p><strong>Direction:</strong> {recentEntry.direction}</p>
+              <p><strong>Distance:</strong> {recentEntry.distance}</p>
+              <p><strong>Pitch Type:</strong> {recentEntry.autoPitchType}</p>
+            </div>
+          )}
     </form>
     )
 }

@@ -48,7 +48,6 @@ const { user } = useAuthContext()
       <p><strong>BP Type: {battingPractice.bpType}</strong></p>
       <p><strong>Date: {dateFormatted}</strong></p>
       <p><strong>Max EV: {battingPractice.exitSpeed}</strong></p>
-      <p><strong>Contact %: {battingPractice.contactPercentage}</strong></p>
       <p>Created at: {formatDate(battingPractice.createdAt)}</p>
       <span onClick={handleClick}>Delete</span>
     </div>
