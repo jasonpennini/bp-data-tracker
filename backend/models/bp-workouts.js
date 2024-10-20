@@ -22,12 +22,6 @@ const bpWorkoutSchema = new Schema ({
     min:0,
     max:130,
   },
-  contactPercentage: {
-    type: Number,
-    required:true,
-    min: 0,
-    max:100,
-  },
   angle: {
     type: Number,
     required:true,
