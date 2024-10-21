@@ -44,7 +44,7 @@ useEffect(() => {
   if(user) {
     fetchBPWorkouts()
   }
-}, [dispatch, user])
+}, [dispatch, user, bpEntries])
 
   return (
   <div className="home">
