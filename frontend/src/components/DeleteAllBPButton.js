@@ -25,10 +25,12 @@ const DeleteAllBPButton = () => {
         throw new Error('Failed to delete all batting practices');
       }
       const result = await response.json();
-      console.log('Deleted all BP entries:', result);
       alert('All batting practice entries have been deleted');
+     // Refresh the current page after deletion
+     window.location.reload(); // This will perform a GET request for the current page
+
     } catch (error) {
-      console.error('Error:', error);
+      console.log(error, "error")
       alert('Failed to delete entries. Please try again.');
     }
   };
