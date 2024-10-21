@@ -1,5 +1,5 @@
 const express = require('express')
-const {createBattingPractice, getAllBattingPractices, getOneBattingPractice, updateBattingPracitce, deleteBattingPractice } 
+const {createBattingPractice, getAllBattingPractices, getOneBattingPractice, updateBattingPractice, deleteBattingPractice } 
 = require('../controllers/battingPracticeController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -11,7 +11,7 @@ router.use(requireAuth)
 
 router.post('/data-input/bpentry', createBattingPractice)
 
-router.patch('/:id', updateBattingPracitce) 
+router.patch('/:id', updateBattingPractice) 
 
 router.delete('/:id', deleteBattingPractice)
 

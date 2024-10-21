@@ -1,5 +1,5 @@
 const express = require('express')
-const {createBattingPractice, getAllBattingPractices, getOneBattingPractice, updateBattingPracitce, deleteBattingPractice } 
+const {createBattingPractice, getAllBattingPractices, getOneBattingPractice, deleteBattingPractice, createBattingPractices, updateBattingPractice } 
 = require('../controllers/battingPracticeController')
 const requireAuth = require('../middleware/requireAuth')
 
@@ -17,9 +17,9 @@ router.get('/', getAllBattingPractices)
 router.get('/:id', getOneBattingPractice)
 
 router.post('/navbar/data-input/bpentry', createBattingPractice)
-router.post('/', createBattingPractice)
+router.post('/', createBattingPractices)
 
-router.patch('/:id', updateBattingPracitce) 
+router.patch('/', updateBattingPractice)
 
 router.delete('/:id', deleteBattingPractice)
 

@@ -49,12 +49,12 @@ const getOneBattingPractice = async(req, res) => {
 
 // create new bp
 const createBattingPractice = async (req, res) => {
+  console.log('inside Create BP Controller')
 
   // we know req.user exists since we will never hit this line of code without passing through the autorization middlware first
   const user_id = req.user._id
 
   const {player, bpType, date, exitSpeed, angle, direction, distance, autoPitchType } = req.body
-
 
   let errorFields = []
   const inputDate = new Date(date);
@@ -89,9 +89,13 @@ const createBattingPractice = async (req, res) => {
     errorFields.push("Pitch Type")
   }
 
+ console.log(errorFields, "Error Fields Array")
+
   if(errorFields.length>0) {
     return res.status(400).json({error: `Please fill in all fields with valid values: ${errorFields}`, errorFields})
   }
+
+  console.log(errorFields, "Error Fields Array")
 
   try {
     // workout model tests the inputs that we destructured off the request body on the front end and creates an object 
@@ -111,12 +115,81 @@ const createBattingPractice = async (req, res) => {
       user_id
     });
 
-
     const battingPractice = await BPWorkout.create({player, bpType, date, exitSpeed, angle, direction, distance, autoPitchType, user_id})
     console.log(`new battingPractice Entry added to the DB ${battingPractice}`)
     return res.status(200).json(battingPractice)
   } catch(error) {
     return res.status(400).json({error:error.message})
+  }
+}
+
+  // Validate each batting practice entry in the array
+ // Create multiple batting practices from CSV upload
+const createBattingPractices = async (req, res) => {
+  console.log('inside create batting practices function')
+  const user_id = req.user._id;
+
+
+  const { workouts } = req.body;
+  console.log(workouts, "workouts")
+  console.log(Array.isArray(workouts))
+
+  if (!workouts || !Array.isArray(workouts)) {
+    return res.status(400).json({ error: "No valid batting practices found in the request" });
+  }
+
+  let errorFields = [];
+
+ 
+  // Validate each batting practice entry in the array
+  workouts.forEach((bp, index) => {
+    const { player, bpType, date, exitSpeed, angle, direction, distance, autoPitchType } = bp;
+    
+    const inputDate = new Date(date);
+    const today = new Date();
+    const validExitSpeed = exitSpeed => exitSpeed >= 0 && exitSpeed <= 130;
+    const validAngle = angle => angle >= -180 && angle <= 180;
+    const validDirection = direction => direction >= -180 && direction <= 180;
+    const validDistance = distance => distance >= 0 && distance <= 600;
+
+    let invalidFields = [];
+
+    if (!player) invalidFields.push("player");
+    if (!bpType) invalidFields.push("bpType");
+    if (!date || inputDate > today) invalidFields.push("date");
+    if (!exitSpeed || !validExitSpeed(exitSpeed)) invalidFields.push("exitSpeed");
+    if (!angle && angle!==0 || !validAngle(angle)) invalidFields.push("angle");
+    if (!direction && direction !==0 || !validDirection(direction)) invalidFields.push("direction");
+    if (!distance || !validDistance(distance)) invalidFields.push("distance");
+    if (!autoPitchType) invalidFields.push("autoPitchType");
+  
+    if (invalidFields.length > 0) {
+      errorFields.push({ index, player, bpType, message: "Invalid data", invalidFields });
+    }
+  });
+
+  // Check if there are any validation errors
+  if (errorFields.length > 0) {
+    return res.status(400).json({ error: "Some entries contain invalid data", errorFields });
+  }
+
+  try {
+    // Add the user_id to each entry before saving
+    console.log("inside try block")
+
+    const battingPracticesToSave = workouts.map(bp => ({
+      ...bp,
+      user_id
+    }));
+
+    console.log(battingPracticesToSave, "about to save battingPractices to DB")
+
+    // Use insertMany for batch creation
+    const createdBattingPractices = await BPWorkout.insertMany(battingPracticesToSave);
+    
+    res.status(200).json(createdBattingPractices);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create multiple batting practices.' });
   }
 }
 
@@ -134,9 +207,8 @@ const deleteBattingPractice = async (req, res) => {
   res.status(200).json(battingPractice)
 }
  
-
 // edit bp
-const updateBattingPracitce = async (req, res) => {
+const updateBattingPractice = async (req, res) => {
   try {
     const {id} = req.params
     if(!mongoose.Types.ObjectId.isValid(id)) {
@@ -156,6 +228,7 @@ module.exports = {
   createBattingPractice,
   getAllBattingPractices,
   getOneBattingPractice, 
-  updateBattingPracitce,
-  deleteBattingPractice
+  deleteBattingPractice,
+  createBattingPractices,
+  updateBattingPractice
 }
