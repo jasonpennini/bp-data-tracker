@@ -49,7 +49,6 @@ const getOneBattingPractice = async(req, res) => {
 
 // create new bp
 const createBattingPractice = async (req, res) => {
-  console.log('inside Create BP Controller')
 
   // we know req.user exists since we will never hit this line of code without passing through the autorization middlware first
   const user_id = req.user._id
@@ -89,13 +88,9 @@ const createBattingPractice = async (req, res) => {
     errorFields.push("Pitch Type")
   }
 
- console.log(errorFields, "Error Fields Array")
-
   if(errorFields.length>0) {
     return res.status(400).json({error: `Please fill in all fields with valid values: ${errorFields}`, errorFields})
   }
-
-  console.log(errorFields, "Error Fields Array")
 
   try {
     // workout model tests the inputs that we destructured off the request body on the front end and creates an object 
@@ -103,18 +98,6 @@ const createBattingPractice = async (req, res) => {
     // the Workout model creates an object to send back to the front end and returns it in json format.
     // adds document to the DB in MongoDB too 
     
-    console.log('Creating Batting Practice with:', {
-      player,
-      bpType,
-      date,
-      exitSpeed,
-      angle,
-      direction,
-      distance,
-      autoPitchType,
-      user_id
-    });
-
     const battingPractice = await BPWorkout.create({player, bpType, date, exitSpeed, angle, direction, distance, autoPitchType, user_id})
     console.log(`new battingPractice Entry added to the DB ${battingPractice}`)
     return res.status(200).json(battingPractice)
@@ -126,13 +109,10 @@ const createBattingPractice = async (req, res) => {
   // Validate each batting practice entry in the array
  // Create multiple batting practices from CSV upload
 const createBattingPractices = async (req, res) => {
-  console.log('inside create batting practices function')
   const user_id = req.user._id;
 
 
   const { workouts } = req.body;
-  console.log(workouts, "workouts")
-  console.log(Array.isArray(workouts))
 
   if (!workouts || !Array.isArray(workouts)) {
     return res.status(400).json({ error: "No valid batting practices found in the request" });
@@ -175,14 +155,11 @@ const createBattingPractices = async (req, res) => {
 
   try {
     // Add the user_id to each entry before saving
-    console.log("inside try block")
 
     const battingPracticesToSave = workouts.map(bp => ({
       ...bp,
       user_id
     }));
-
-    console.log(battingPracticesToSave, "about to save battingPractices to DB")
 
     // Use insertMany for batch creation
     const createdBattingPractices = await BPWorkout.insertMany(battingPracticesToSave);
