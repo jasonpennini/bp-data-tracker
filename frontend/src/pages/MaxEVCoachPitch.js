@@ -13,7 +13,6 @@ const MaxEVCoachPitch = () => {
   const { bpEntries, dispatch } = useBPContext()
   const { user } = useAuthContext()
 
-
 //dependency array tells useEffect hook to run when either the dispatch function or user changes, in addition to the initial rendering of home 
 useEffect(() => {
   const fetchBPWorkouts = async () => {

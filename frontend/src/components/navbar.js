@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
+import DeleteAllBPButton from './DeleteAllBPButton'; 
+
 
 const Navbar = () => {
   const { logout } = useLogout();
@@ -22,11 +24,12 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle" href="/bpUpload" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Data Input</a>
+                  <a className="nav-link dropdown-toggle" href="/bpUpload" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Data</a>
                   <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><Link to="/data-input/csv" className="dropdown-item">CSV Upload</Link></li>
                     <li><Link to="/navbar/data-input/bpentry" className="dropdown-item">Manual BP Entry</Link></li>
                     <li><Link to="/data-input/edit" className="dropdown-item">Edit BP Entry</Link></li>
+                    <li><DeleteAllBPButton /></li>
                   </ul>
                 </li>
                 <li className="nav-item">

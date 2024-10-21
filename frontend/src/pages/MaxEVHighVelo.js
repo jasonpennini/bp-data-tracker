@@ -17,7 +17,6 @@ const MaxEVHighVelo = () => {
 //dependency array tells useEffect hook to run when either the dispatch function or user changes, in addition to the initial rendering of home 
 useEffect(() => {
   const fetchBPWorkouts = async () => {
-    console.log(bpEntries)
     
     // get request for all bp data will be executed when this function is invoked. 
     // Only perform fetch if user is authorized with bearer token from JWT

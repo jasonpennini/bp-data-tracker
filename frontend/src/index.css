@@ -186,3 +186,14 @@ form select {
   background-color: #f0f0f0; /* Set the background color of the active tile */
   color: black; /* Set active tile text color to black */
 }
+.delete-all-button {
+  padding: 10px 15px; /* Match the dropdown-item padding */
+  color: #333; /* Set text color */
+  background: transparent; /* Match dropdown item background */
+  border: none; /* No border */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-family: "Poppins"; /* Match font */
+  text-align: left; /* Align text to the left */
+  display: block; /* Ensure it behaves like a block element */
+  width: 100%; /* Full width for consistent appearance */
+}
