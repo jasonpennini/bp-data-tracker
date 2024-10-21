@@ -183,6 +183,27 @@ const deleteBattingPractice = async (req, res) => {
   }
   res.status(200).json(battingPractice)
 }
+
+// delete all bp entries
+const deleteBattingPractices = async (req, res) => {
+  try {
+    const user_id = req.user.id;
+    const user = await User.findById(user_id);
+    if (!user || !user.isAdmin) {
+      return res.status(403).json({ error: 'Unauthorized user cannot delete all' });
+    }
+    
+    const battingPractice = await BPWorkout.deleteMany({})
+
+    if (!battingPractice) {
+      return res.status(400).json({error: 'No BP workouts to delete'})
+    }
+    res.status(200).json({message:"All BP workouts deleted successfully"})
+  } catch(error) {
+    res.status(500).json({error: 'Failed to delete BP workouts'})
+  }
+  
+}
  
 // edit bp
 const updateBattingPractice = async (req, res) => {
@@ -207,5 +228,6 @@ module.exports = {
   getOneBattingPractice, 
   deleteBattingPractice,
   createBattingPractices,
-  updateBattingPractice
+  updateBattingPractice,
+  deleteBattingPractices
 }
