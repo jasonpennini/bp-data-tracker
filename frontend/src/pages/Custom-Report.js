@@ -5,6 +5,7 @@ import { useAuthContext } from '../hooks/useAuthContext'
 
 //components
 import CustomLineChart from '../components/CustomLineChart';
+import CustomDistanceLineChart from '../components/CustomDistanceLineChart';
 import CreateGraphForm from '../components/CreateGraphForm';
 
 const CustomChart = () => {
@@ -51,6 +52,7 @@ return (
       
       <div>
         {showChart && <CustomLineChart filteredData={filteredData} selectedBpType={selectedBpType}/>}
+        {showChart && <CustomDistanceLineChart filteredData={filteredData} selectedBpType={selectedBpType}/>}
       </div>
     </div>
       <div>

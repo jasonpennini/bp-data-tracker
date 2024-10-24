@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 
-function CustomLineChart({ filteredData, selectedBpType }) {
+function CustomDistanceLineChart({ filteredData, selectedBpType }) {
 
-    const [exitSpeedChartData, setexitSpeedChartData] = useState({
+    const [distanceChartData, setDistanceChartData] = useState({
         labels: [],
         datasets: []
     });
@@ -13,8 +13,8 @@ function CustomLineChart({ filteredData, selectedBpType }) {
             const filteredByBpType = filteredData.filter(entry => entry.bpType === selectedBpType);
     
             if (filteredByBpType.length === 0) {
-                // Handle the case where no data matches the selected BP type
-                console.error(`No data found for bpType: ${selectedBpType}`);
+
+              console.error(`No data found for bpType: ${selectedBpType}`);
                 return;
             }
     
@@ -27,19 +27,19 @@ function CustomLineChart({ filteredData, selectedBpType }) {
                 })
             );
 
-            const exitSpeedData = filteredByBpType.map(entry => entry.exitSpeed);
+            const distanceData = filteredByBpType.map(entry => entry.distance);
             const player = sortedData[0].player;
             const bpType = sortedData[0].bpType;
     
-            setexitSpeedChartData({
+            setDistanceChartData({
                 labels: labels,
                 datasets: [
                     {
-                        label: `${player} | exitSpeed in MPH | ${bpType}`,
-                        data: exitSpeedData,
+                        label: `${player} | Distance in feet | ${bpType}`,
+                        data: distanceData,
                         fill: false,
-                        backgroundColor: 'rgb(255, 99, 132)',
-                        borderColor: 'rgba(255, 99, 132, 0.5)',
+                        backgroundColor: 'rgb(54, 162, 235)', // Blue color
+                        borderColor: 'rgba(54, 162, 235, 0.5)', // Lighter blue border
                     }
                 ]
             });
@@ -48,7 +48,7 @@ function CustomLineChart({ filteredData, selectedBpType }) {
 
 
     // Define chart options
-    const exitSpeedChartOptions = {
+    const distanceChartOptions = {
         plugins: {
             title: {
                 display: true,
@@ -79,11 +79,11 @@ function CustomLineChart({ filteredData, selectedBpType }) {
         <div>
             <div style={{ display: 'flex' }}>
                 <div style={chartContainerStyle}>
-                    <Line data={exitSpeedChartData} options ={exitSpeedChartOptions} />
+                    <Line data={distanceChartData} options ={distanceChartOptions} />
                 </div>
             </div>
         </div>
     );
 }
 
-export default CustomLineChart;
+export default CustomDistanceLineChart;
