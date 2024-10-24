@@ -26,7 +26,6 @@ const DeleteAllBPButton = () => {
       }
       const result = await response.json();
       alert('All batting practice entries have been deleted');
-     // Refresh the current page after deletion
      window.location.reload(); // This will perform a GET request for the current page
 
     } catch (error) {

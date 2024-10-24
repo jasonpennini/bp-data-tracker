@@ -11,6 +11,7 @@ import LineChart from '../components/LineChart';
 import CustomLineChart from '../components/CustomLineChart';
 // import BPForm from '../components/BPForm';
 import CreateGraphForm from '../components/CreateGraphForm';
+import DistanceLineChart from '../components/DistanceLineChart';
 
 const Home = () => {
   // desctructuring off of the useBPContext hook. bpEntries an array of BP Entry objects. 
@@ -53,7 +54,7 @@ return (
       <br></br>
       <div>
         <LineChart bpEntries={bpEntries}/>
-        {showChart && <CustomLineChart filteredData={filteredData} selectedBpType={selectedBpType}/>}
+        <DistanceLineChart bpEntries={bpEntries}/>
       </div>
     </div>
   </div>

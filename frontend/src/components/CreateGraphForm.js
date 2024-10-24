@@ -17,7 +17,7 @@ export const CreateGraphForm = ({bpEntries, onFilterData}) => {
 
     const {user} = useAuthContext();
   
-    const bpTypeOptions = ["Coach Pitch", "Black Box", "High Velocity", "Situational"];
+    const bpTypeOptions = ["Coach Pitch", "Blackbox", "High Velocity", "Situational"];
 
     const handleSubmit = async (e) => {
         e.preventDefault();

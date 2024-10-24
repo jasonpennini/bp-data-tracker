@@ -120,7 +120,7 @@ const BPEntryForm = () => {
         >
         <option value=""> Select ... </option>
         <option value="Coach Pitch">Coach Pitch</option>
-        <option value="Black Box">Black Box</option>
+        <option value="Blackbox">Blackbox</option>
         <option value="High Velocity">High Velocity</option>
         <option value="Situational">Situational</option>
       </select>

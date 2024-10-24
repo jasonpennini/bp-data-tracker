@@ -8,7 +8,6 @@ function CustomLineChart({ filteredData, selectedBpType }) {
         datasets: []
     });
 
-    
     useEffect(() => {
         if (filteredData) {
             const filteredByBpType = filteredData.filter(entry => entry.bpType === selectedBpType);
@@ -44,8 +43,6 @@ function CustomLineChart({ filteredData, selectedBpType }) {
                     }
                 ]
             });
-    
-
         }
     }, [filteredData, selectedBpType]);
 
@@ -74,7 +71,7 @@ function CustomLineChart({ filteredData, selectedBpType }) {
         padding: '10px',
         marginBottom: '20px',
         display: 'inline-block',
-        width: 'calc(50% - 22px)', // Adjusted to consider 10px padding on each side and 1px border
+        width: 'calc(50% - 22px)', 
         boxSizing: 'border-box'
       };
 

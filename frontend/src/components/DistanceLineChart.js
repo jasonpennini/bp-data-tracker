@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
-import { touchRippleClasses } from "@mui/material";
+import { TextareaAutosize } from "@mui/material";
 
-function LineChart({ bpEntries }) {
-  const [exitSpeedChartData, setExitSpeedChartData] = useState({
+function DistanceLineChart({ bpEntries }) {
+  const [distanceChartData, setdistanceChartData] = useState({
     labels: [],
     datasets: []
   });
@@ -28,7 +28,6 @@ function LineChart({ bpEntries }) {
         }
         
         acc[date][player].push({
-          exitSpeed: entry.exitSpeed,
           distance: entry.distance
         });
         
@@ -79,7 +78,7 @@ function LineChart({ bpEntries }) {
 
       const labels = Object.keys(groupedEntriesByDateAndPlayer).sort();
       const playerColors = ['red', 'navy', 'black']; // Color options for different players
-      const exitSpeedDataSets = [];
+      const distanceDataSets = [];
 
       for (const date of labels) {
         const playerData = groupedEntriesByDateAndPlayer[date];
@@ -88,36 +87,35 @@ function LineChart({ bpEntries }) {
           const playerEntries = playerData[player];
           
           // Calculate max exit speed for the player on this date
-          const maxExitSpeed = Math.max(...playerEntries.map(entry => entry.exitSpeed));
+          const maxDistance = Math.max(...playerEntries.map(entry => entry.distance));
           
-          const datasetIndex = exitSpeedDataSets.findIndex(dataset => dataset.label === player);
+          const datasetIndex = distanceDataSets.findIndex(dataset => dataset.label === player);
 
           if (datasetIndex === -1) {
-            exitSpeedDataSets.push({
+            distanceDataSets.push({
               label: player,
-              data: [maxExitSpeed], // Add max exit speed for the first time
-              backgroundColor: playerColors[exitSpeedDataSets.length % playerColors.length],
-              borderColor: playerColors[exitSpeedDataSets.length % playerColors.length],
+              data: [maxDistance], 
+              backgroundColor: playerColors[distanceDataSets.length % playerColors.length],
+              borderColor: playerColors[distanceDataSets.length % playerColors.length],
               borderWidth: 2
             });
           } else {
-            exitSpeedDataSets[datasetIndex].data.push(maxExitSpeed); // Push max exit speed for this date
+            distanceDataSets[datasetIndex].data.push(maxDistance); // Push max exit speed for this date
           }
         }
       }
-
-      setExitSpeedChartData({
+      setdistanceChartData({
         labels: labels,
-        datasets: exitSpeedDataSets
+        datasets: distanceDataSets
       });
     }
   }, [bpEntries]);
 
-  const exitSpeedOptions = {
+  const distanceSpeedOptions = {
     plugins: {
       title: {
         display: true,
-        text: 'Exit Speed in MPH',
+        text: 'Distance in Feet',
         size: 50
       }
     },
@@ -152,10 +150,10 @@ function LineChart({ bpEntries }) {
   return (
     <>
       <div style={chartContainerStyle}>
-        <Line data={exitSpeedChartData} options={exitSpeedOptions} />
+        <Line data={distanceChartData} options={distanceSpeedOptions} />
       </div> 
     </>
   );
 }
 
-export default LineChart;
+export default DistanceLineChart;
