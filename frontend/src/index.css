@@ -109,39 +109,39 @@ input.error {
 }
 
 .navbar-nav {
-  display: flex; /* Ensure nav items are displayed in a row */
+  display: flex; 
 }
 
 .nav-item {
-  margin-left: 10px; /* Space between nav items */
+  margin-left: 10px; 
 }
 
 .dropdown-item {
-  padding: 10px 15px; /* Ensure dropdown items have consistent padding */
+  padding: 10px 15px; 
 }
 
 form .form-control {
-  width: auto; /* Allow the input to size correctly */
+  width: auto; 
 }
 
 .auth-buttons {
-  display: flex; /* Align auth buttons in a row */
-  align-items: center; /* Center vertically */
+  display: flex; 
+  align-items: center; 
 }
 
 .auth-buttons .btn-link {
-  color: var(--primary); /* Match primary color */
+  color: var(--primary); 
 }
 
 .auth-buttons .btn {
-  margin-left: 10px; /* Space between buttons */
+  margin-left: 10px; 
 }
 
 .navbar .btn {
-  margin-left: 5px; /* Adjust margin as needed */
-  border-radius: 4px; /* Consistent border radius */
-  font-family: "Poppins"; /* Consistent font family */
-  font-size: 1em; /* Consistent font size */
+  margin-left: 5px; 
+  border-radius: 4px; 
+  font-family: "Poppins"; 
+  font-size: 1em; 
 }
 /* auth forms */
 form.signup, form.login {
@@ -245,8 +245,8 @@ select {
 
 .header-container{
   display: flex;
-  align-items: center !important; /* Center items horizontally */
-  margin-bottom: 20px; /* Space between this and the next section */
+  align-items: center !important; 
+  margin-bottom: 20px; 
   padding: 10px;
 }
 .bpEntryButton {
