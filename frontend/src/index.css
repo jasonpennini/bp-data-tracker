@@ -230,7 +230,7 @@ label {
   margin: 10px; 
 }
 
-input, .custom-calendar {
+.custom-calendar {
   width: 100%; 
   max-width: 300px; 
 }
