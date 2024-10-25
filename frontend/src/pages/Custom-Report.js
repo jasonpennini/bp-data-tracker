@@ -47,18 +47,23 @@ const CustomChart = () => {
   };
 
 return (
-  <div className="home">
-    <div className='battingPractices'>
-      
-      <div>
-        {showChart && <CustomLineChart filteredData={filteredData} selectedBpType={selectedBpType}/>}
-        {showChart && <CustomDistanceLineChart filteredData={filteredData} selectedBpType={selectedBpType}/>}
+  <div className="container">
+    <div className="row">
+    <div className="home">
+       <div className="border-CreateGraphForm">
+          {bpEntries && <CreateGraphForm key={bpEntries._id} bpEntries={bpEntries} onFilterData={handleFilterData}/>}
+        </div>
       </div>
-    </div>
-      <div>
-        {bpEntries && <CreateGraphForm key={bpEntries._id} bpEntries={bpEntries} onFilterData={handleFilterData}/>}
+      <div className="row">
+        <div className='column'>
+          {showChart && <CustomLineChart filteredData={filteredData} selectedBpType={selectedBpType}/>}
+        </div>
+        <div className='column'>
+            {showChart && <CustomDistanceLineChart filteredData={filteredData} selectedBpType={selectedBpType}/>}
+        </div>
       </div>
-   </div>
+     </div>
+     </div>
   );
   }
 export default CustomChart

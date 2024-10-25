@@ -65,7 +65,6 @@ function CustomLineChart({ filteredData, selectedBpType }) {
         }
     };
 
-    
     const chartContainerStyle = {
         border: '1px solid black',
         padding: '10px',

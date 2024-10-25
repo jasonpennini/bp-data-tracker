@@ -105,6 +105,7 @@ input.error {
 .navbar {
   display: flex;
   align-items: center;
+  min-width: 1100px;
 }
 
 .navbar-nav {
@@ -174,26 +175,41 @@ form select {
   border-radius: 4px;
 }
 .custom-calendar {
-  background-color: white; /* Ensure background is white */
-  color: black; /* Set text color to black */
+  background-color: white;
+  color: black; 
 }
 
 .custom-calendar button {
-  color: black; /* Ensure button text is also black */
+  color: black; 
 }
 
 .custom-calendar .react-calendar__tile--active {
-  background-color: #f0f0f0; /* Set the background color of the active tile */
-  color: black; /* Set active tile text color to black */
+  background-color: #f0f0f0;
+  color: black;
 }
 .delete-all-button {
-  padding: 10px 15px; /* Match the dropdown-item padding */
-  color: #333; /* Set text color */
-  background: transparent; /* Match dropdown item background */
-  border: none; /* No border */
-  cursor: pointer; /* Pointer cursor on hover */
-  font-family: "Poppins"; /* Match font */
-  text-align: left; /* Align text to the left */
-  display: block; /* Ensure it behaves like a block element */
-  width: 100%; /* Full width for consistent appearance */
+  padding: 10px 15px; 
+  color: #333;
+  background: transparent; 
+  border: none;
+  cursor: pointer; 
+  font-family: "Poppins";
+  text-align: left; 
+  display: block; 
+  width: 100%; 
+}
+label {
+  display: block;
+  text-align: center; 
+}
+.selectPlayerBP {
+    display: block; 
+    text-align: left; 
+    margin: 10px 0; 
+}
+.border-CreateGraphForm {
+  outline: 1px solid rgba(0, 0, 0, 0.2); 
+  padding: 15px; /* Optional: Add padding for inner spacing */
+  border-radius: 4px; /* Optional: Add border radius for rounded corners */
+  margin-bottom: 10px;
 }
