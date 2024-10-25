@@ -91,25 +91,36 @@ return (
         <div className="col-2">
         <div className="Player-entry">
         <label>Select or Add Player</label>
-      <select value={selectedPlayer} onChange={(e) => {setSelectedPlayer(e.target.value)}}>
-        <option value="">Select...</option>
-          {existingPlayers.map((player, index) => (
-          <option key={index} value={player}>
-            {player}
-        </option>
-         ))}
-       </select>
-        <input type="text" value={newPlayer} onChange={(e) => { 
-              setSelectedPlayer('') 
-              setNewPlayer(e.target.value);
-            }}
-            className={errorFields.includes('Player') ? 'error' : ''}
-            />
+        <select
+  value={selectedPlayer || newPlayer} // Ensures correct display of chosen value
+  onChange={(e) => {
+    setSelectedPlayer(e.target.value);
+    setNewPlayer(''); // Clear newPlayer when selecting from dropdown
+  }}
+>
+  <option value="">Select...</option>
+  {existingPlayers.map((player, index) => (
+    <option key={index} value={player}>
+      {player}
+    </option>
+  ))}
+</select>
+
+<input
+  type="text"
+  value={newPlayer}
+  onChange={(e) => {
+    setSelectedPlayer(''); // Clear selectedPlayer when typing
+    setNewPlayer(e.target.value);
+  }}
+  className={errorFields.includes('Player') ? 'error' : ''}
+/>
         </div>
         <label> BP Type </label>
         <select
             id="bpType"
-            onChange={(e)=> setBPType(e.target.value)}
+            onChange={(e)=> {console.log(bpType)
+              setBPType(e.target.value)}}
             value={bpType}
             className={errorFields.includes('BP Type') ? 'error' : ''}
             >
