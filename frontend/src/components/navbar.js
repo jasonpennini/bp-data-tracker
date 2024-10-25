@@ -2,16 +2,25 @@ import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import DeleteAllBPButton from './DeleteAllBPButton'; 
+import { useNavigate } from 'react-router-dom';
 
 
 const Navbar = () => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
+  const navigate = useNavigate();
 
   const handleClick = () => {
     logout();
   };
 
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
+  const handleSignupClick = () => {
+    navigate('/signup');
+  };
 
   return (
     <header>
@@ -48,8 +57,7 @@ const Navbar = () => {
               <form className="d-flex">
                 <input className="form-control me-2" type="search" placeholder="Player Search" aria-label="Player Search" />
                 <button className="btn btn-outline-success" type="submit">Search</button>
-              </form>
-              {user && (
+                {user && (
                 <div className="userLogin">
                   <span>{user.email}</span>
                   <button onClick={handleClick} className="btn btn-outline-success">
@@ -59,10 +67,12 @@ const Navbar = () => {
               )}
                 {!user && (
                   <div>
-                    <Link to='/login' className="btn btn-outline-success">Login</Link>
-                    <Link to='/signup' className="btn btn-outline-success">Signup</Link>
+                    <button onClick={handleLoginClick} className="btn btn-outline-success">Login</button>
+                    <button onClick={handleSignupClick} className="btn btn-outline-success">Signup</button>
                   </div>
                 )}
+              </form>
+              
             </div>
           </div>
         </nav>

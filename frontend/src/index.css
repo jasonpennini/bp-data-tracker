@@ -208,8 +208,8 @@ label {
 }
 .border-CreateGraphForm {
   outline: 1px solid rgba(0, 0, 0, 0.2); 
-  padding: 15px; /* Optional: Add padding for inner spacing */
-  border-radius: 4px; /* Optional: Add border radius for rounded corners */
+  padding: 15px; 
+  border-radius: 4px; 
   margin-bottom: 10px;
 }
 .input{
