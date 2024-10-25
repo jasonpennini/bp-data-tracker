@@ -17,7 +17,7 @@ const Navbar = () => {
     <header>
       <div className="container">
         <Link to="/">
-          <h1>Batting Practice Tracker</h1>
+          <h1 className="title">Batting Practice Tracker</h1>
         </Link>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container-fluid">

@@ -35,7 +35,7 @@ function CustomDistanceLineChart({ filteredData, selectedBpType }) {
                 labels: labels,
                 datasets: [
                     {
-                        label: `${player} | Distance in feet | ${bpType}`,
+                        label: `${player} | Max Distance in feet | ${bpType}`,
                         data: distanceData,
                         fill: false,
                         backgroundColor: 'rgb(54, 162, 235)', // Blue color

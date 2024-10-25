@@ -117,7 +117,7 @@ function LineChart({ bpEntries }) {
     plugins: {
       title: {
         display: true,
-        text: 'Exit Speed in MPH',
+        text: 'Max Exit Speed in MPH',
         size: 50
       }
     },
@@ -128,13 +128,13 @@ function LineChart({ bpEntries }) {
         }
       }
     },
-    maintainAspectRatio: true, // Allows the chart to stretch
-    responsive: true, // Ensures the chart adjusts to the container size
+    maintainAspectRatio: false, // Disable maintaining aspect ratio
+    responsive: true, // Keep the chart responsive
     layout: {
       padding: {
         left: 0,
-        right: 0, // Reduce padding on the right
-        top: 20,
+        right: 0,
+        top: 0,
         bottom: 0
       }
     }
@@ -144,18 +144,18 @@ function LineChart({ bpEntries }) {
     border: '1px solid black',
     padding: '10px',
     marginBottom: '20px',
-    display: 'inline-block',
-    width: '50%', // Maximize width usage
+    width: '45%', // Take up full width of the parent container
+    height: '400px', // Set the height of the container
     boxSizing: 'border-box'
   };
-
+  
   return (
     <>
       <div style={chartContainerStyle}>
-        <Line data={exitSpeedChartData} options={exitSpeedOptions} />
-      </div> 
+        <Line data={exitSpeedChartData} options={exitSpeedOptions} height={400} />
+      </div>
     </>
   );
-}
+} 
 
 export default LineChart;

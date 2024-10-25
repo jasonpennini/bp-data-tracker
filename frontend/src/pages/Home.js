@@ -52,10 +52,10 @@ return (
         {bpEntries && <BPTable key={bpEntries._id} bpEntries={bpEntries}/>}
       </div>            
       <br></br>
-      <div>
-        <LineChart bpEntries={bpEntries}/>
-        <DistanceLineChart bpEntries={bpEntries}/>
-      </div>
+      <div className="chartsContainer" style={{ display: 'flex', gap: '20px' }}>
+          <LineChart bpEntries={bpEntries} />
+          <DistanceLineChart bpEntries={bpEntries} />
+        </div>
     </div>
   </div>
   );

@@ -85,30 +85,27 @@ const handleSubmit = async (e) => {
 
 return (
     <form className="create" onSubmit={handleSubmit}>
-      <h3>Add a New BP Entry</h3>
-      <label>Select a Player or Add New Player</label>
-      <select
-          value={selectedPlayer}
-          onChange={(e) => {
-            setSelectedPlayer(e.target.value);
-          }}
-      >
-      <option value="">Select...</option>
-      {existingPlayers.map((player, index) => (
-        <option key={index} value={player}>
-          {player}
-      </option>
-           ))}
-        </select>
-        <input
-            type="text"
-            value={newPlayer}
-            onChange={(e) => {
-              setSelectedPlayer(''); // Clear selected player when typing a new one
+        <div className="border-addBPEntry">
+      <div className="container">
+      <div className="row">
+        <div className="col-2">
+        <div className="Player-entry">
+        <label>Select or Add Player</label>
+      <select value={selectedPlayer} onChange={(e) => {setSelectedPlayer(e.target.value)}}>
+        <option value="">Select...</option>
+          {existingPlayers.map((player, index) => (
+          <option key={index} value={player}>
+            {player}
+        </option>
+         ))}
+       </select>
+        <input type="text" value={newPlayer} onChange={(e) => { 
+              setSelectedPlayer('') 
               setNewPlayer(e.target.value);
             }}
             className={errorFields.includes('Player') ? 'error' : ''}
             />
+        </div>
         <label> BP Type </label>
         <select
             id="bpType"
@@ -122,50 +119,9 @@ return (
           <option value="High Velocity">High Velocity</option>
           <option value="Situational">Situational</option>
         </select>
-       
-        <label> Date </label>
-        <div className="custom-calendar" onSubmit={handleSubmit}>
-          <Calendar calendarType="gregory" onChange={(date) => setDate(date.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', weekStartsOn:0 }))} value={date} className="custom-calendar" />
-        </div>
-        <label> Exit Speed </label>
-        <input
-            min="0"
-            type="number"
-            onChange={(e)=> setExitSpeed(e.target.value)}
-            value={exitSpeed}
-            className = {errorFields.includes('Max EV') ? 'error' : ''}
-            />
-        <label> Angle: </label>
-        <input 
-        type="number"
-        onChange={(e)=> setAngle(e.target.value)}
-        value={angle}
-        className = {errorFields.includes('Angle') ? 'error' : ''}
-        />
 
-        <label> Direction: </label>
-        <input 
-        type="number"
-        onChange={(e)=> setDirection(e.target.value)}
-        value={direction}
-        className = {errorFields.includes('Direction') ? 'error' : ''}
-        />
-
-        <label> Distance: </label>
-        <input 
-        type="number"
-        onChange={(e)=> setDistance(e.target.value)}
-        value={distance}
-        className = {errorFields.includes('Distance') ? 'error' : ''}
-        />
-
-         <label> Pitch Type </label>
-         <select
-            id="autoPitchType"
-            onChange={(e)=> setAutoPitchType(e.target.value)}
-            value={autoPitchType}
-            className={errorFields.includes('Pitch Type') ? 'error' : ''}
-            >
+        <label> Pitch Type </label>
+         <select id="autoPitchType" onChange={(e)=> setAutoPitchType(e.target.value)} value={autoPitchType} className={errorFields.includes('Pitch Type') ? 'error' : ''}>
           <option value=""> Select ... </option>
           <option value="Sinker">Sinker</option>
           <option value="Changeup">Changeup</option>
@@ -175,8 +131,32 @@ return (
           <option value="Cutter">Cutter</option>
           <option value="Splitter">Splitter</option>
         </select>
-
-        <button> Add BP Entry</button>
+        </div>
+        <div className="col-3">
+        <label> Date </label>
+        <div className="custom-calendar" onSubmit={handleSubmit}>
+          <Calendar calendarType="gregory" onChange={(date) => setDate(date.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', weekStartsOn:0 }))} value={date} className="custom-calendar" />
+        </div>
+        
+        </div>
+        <div className="col-2">
+          <div className="number-entry">
+          <label> Exit Speed </label>
+            <input min="0" type="number" onChange={(e)=> setExitSpeed(e.target.value)} value={exitSpeed} className = {errorFields.includes('Max EV') ? 'error' : 'input'}
+                />
+            <label> Angle: </label>
+            <input type="number" onChange={(e)=> setAngle(e.target.value)} value={angle} className = {errorFields.includes('Angle') ? 'error' : 'input'}/>
+            <label> Direction: </label>
+            <input type="number" onChange={(e)=> setDirection(e.target.value)} value={direction} className = {errorFields.includes('Direction') ? 'error' : 'input'}/>
+            <label> Distance: </label>
+            <input type="number" onChange={(e)=> setDistance(e.target.value)} value={distance} className = {errorFields.includes('Distance') ? 'error' : 'input'}/>
+          </div>
+        </div>
+       </div>
+        <br></br>
+        <div className="row">
+          <button className="bpEntryButton"> Add BP Entry</button>
+        </div>
         {error && <div className='error'>{error}</div>}
         {showAlert && (
             <div className="alert alert-success">
@@ -196,6 +176,9 @@ return (
               <p><strong>Pitch Type:</strong> {recentEntry.autoPitchType}</p>
             </div>
           )}
+        </div>
+        </div>
+
     </form>
     )
 }

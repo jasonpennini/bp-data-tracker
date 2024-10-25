@@ -70,26 +70,19 @@ export const CreateGraphForm = ({ bpEntries, onFilterData }) => {
                 <div className="row">
                     <div className="col-md-4">
                         <h3>Create BP Chart</h3>
-                        <label className="selectPlayerBP">Select a Player and BP Type</label>
-                        <select
-                            onChange={(e) => setPlayer(e.target.value)}
-                            value={player}
-                            className={errorFields.includes('Player') ? 'error' : ''}
-                        >
-                            <option value="">Select Player...</option>
-                            {uniquePlayers.map((playerName, index) => (
-                                <option key={index} value={playerName}>{playerName}</option>
-                            ))}
+                        <label className="selectPlayerBP">Select Player</label>
+                        <select onChange={(e) => setPlayer(e.target.value)} value={player} className={errorFields.includes('Player') ? 'error' : ''}>
+                        <option value="">Select Player...</option>
+                          {uniquePlayers.map((playerName, index) => (
+                            <option key={index} value={playerName}>{playerName}</option>
+                           ))}
                         </select>
-                        <select
-                            onChange={(e) => setBpType(e.target.value)}
-                            value={bpType}
-                            className={errorFields.includes('BPType') ? 'error' : ''}
-                        >
-                            <option value="">Select BP Type</option>
-                            {bpTypeOptions.map((type, index) => (
-                                <option key={index} value={type}>{type}</option>
-                            ))}
+                        <label className="selectPlayerBP">Select BP Type</label>
+                        <select onChange={(e) => setBpType(e.target.value)} value={bpType} className={errorFields.includes('BPType') ? 'error' : ''}>
+                         <option value="">Select BP Type</option>
+                          {bpTypeOptions.map((type, index) => (
+                          <option key={index} value={type}>{type}</option>
+                          ))}
                         </select>
                     </div>
                     <div className="col-md-4">
