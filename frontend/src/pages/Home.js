@@ -1,63 +1,58 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 // hook provides us with dispatch function and state object
-import { useBPContext } from '../hooks/useBPEntriesContext'
-import { useAuthContext } from '../hooks/useAuthContext'
+import { useBPContext } from "../hooks/useBPEntriesContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 //components
-// import BPDetails from "../components/BPDetails"
-// import BPEntryForm from "../components/BPEntryForm"
-import BPTable from '../components/BPTable'
-import LineChart from '../components/LineChart';
-import CustomLineChart from '../components/CustomLineChart';
-// import BPForm from '../components/BPForm';
-import CreateGraphForm from '../components/CreateGraphForm';
-import DistanceLineChart from '../components/DistanceLineChart';
+import BPTable from "../components/BPTable";
+import LineChart from "../components/LineChart";
+import DistanceLineChart from "../components/DistanceLineChart";
 
 const Home = () => {
-  // desctructuring off of the useBPContext hook. bpEntries an array of BP Entry objects. 
+  // desctructuring off of the useBPContext hook. bpEntries an array of BP Entry objects.
   // dispatch will be the function that executes the switch/case statements to update the bpEntries object on BPContext.js
-  const { bpEntries, dispatch } = useBPContext()
-  const { user } = useAuthContext()
-  const [showChart, setShowChart] = useState(false);
-  const [filteredData, setFilteredData] = useState([]);
-  const [selectedBpType, setSelectedBpType] = useState(''); // Hold selected BP type
+  const { bpEntries, dispatch } = useBPContext();
+  const { user } = useAuthContext();
 
-  //dependency array tells useEffect hook to run when either the dispatch function or user changes, in addition to the initial rendering of home 
-   useEffect(() => {
+  //dependency array tells useEffect hook to run when either the dispatch function or user changes, in addition to the initial rendering of home
+  useEffect(() => {
     const fetchBPWorkouts = async () => {
-      // get request for all bp data will be executed when this function is invoked. 
+      // get request for all bp data will be executed when this function is invoked.
       // Only perform fetch if user is authorized with bearer token from JWT
-      const response = await fetch('/api/bp-data/', {
+      const response = await fetch("/api/bp-data/", {
         headers: {
-          'Authorization': `Bearer ${user.token}`
+          Authorization: `Bearer ${user.token}`,
         },
-      })
+      });
       // creating an array of json objects with all batting practices
-      const json = await response.json()
-      // If the json array of objects is returned succesfully, then update state with it. 
+      const json = await response.json();
+      // If the json array of objects is returned succesfully, then update state with it.
       // I.e. BP Workouts will be set to the json array of objects.
       if (response.ok) {
-        dispatch({type:'SET_BPENTRIES', payload: json})
+        dispatch({ type: "SET_BPENTRIES", payload: json });
       }
+    };
+    if (user) {
+      fetchBPWorkouts();
     }
-    if(user) {
-      fetchBPWorkouts()
-    }
-  }, [dispatch, user])
+  }, [dispatch, user]);
 
-return (
-  <div className="home">
-    <div className='battingPractices'>
-      <div className="BPTable">
-        {bpEntries && <BPTable key={bpEntries._id} bpEntries={bpEntries}/>}
-      </div>            
-      <br></br>
-      <div className="chartsContainer" style={{ display: 'flex', gap: '20px' }}>
+  return (
+    <div className="home">
+      <div className="battingPractices">
+        <div className="BPTable">
+          {bpEntries && <BPTable key={bpEntries._id} bpEntries={bpEntries} />}
+        </div>
+        <br></br>
+        <div
+          className="chartsContainer"
+          style={{ display: "flex", gap: "20px" }}
+        >
           <LineChart bpEntries={bpEntries} />
           <DistanceLineChart bpEntries={bpEntries} />
         </div>
+      </div>
     </div>
-  </div>
   );
-}
-export default Home
+};
+export default Home;

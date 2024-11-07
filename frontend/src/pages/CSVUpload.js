@@ -1,8 +1,6 @@
-import CSVImporter from '../components/CSVImporter'
+import CSVImporter from "../components/CSVImporter";
 
 const CSVUpload = () => {
-  return (
-    <CSVImporter />
-  )
-}
-export default CSVUpload
+  return <CSVImporter />;
+};
+export default CSVUpload;

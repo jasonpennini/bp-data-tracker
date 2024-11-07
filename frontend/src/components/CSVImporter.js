@@ -1,40 +1,44 @@
-import Papa from 'papaparse';
-import { useState } from 'react';
-import { parse } from 'date-fns';
-import { useAuthContext } from '../hooks/useAuthContext'
+import Papa from "papaparse";
+import { useState } from "react";
+import { parse } from "date-fns";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const CSVImporter = () => {
-  const [csvdata, setData] = useState([])
-  const {user} = useAuthContext()
+  const [csvdata, setData] = useState([]);
+  const { user } = useAuthContext();
 
   // Mapping CSV fields to DB Schema
   const mapCSVToSchema = (csvRows) => {
     return csvRows
-    .map((row) => {
-      // Using a ternary to check and parse date
-      let parsedDate = null;
-      try {
-        parsedDate = row.Date ? parse(row.Date, 'MM/dd/yyyy', new Date()) : null;
-      } catch (error) {
-        console.error(`Error parsing date: ${row.Date}`, error);
-      }
-  
-      return {
-        player: row.Batter,
-        bpType: row.TaggedHitType,
-        date: parsedDate,
-        exitSpeed: Number(row.ExitSpeed),
-        angle: Number(row.Angle),
-        direction: Number(row.Direction),
-        distance: Number(row.Distance),
-        autoPitchType: row.AutoPitchType,
-      };
-    })
-    .filter((data) => 
-      ![data.exitSpeed, data.angle, data.direction, data.distance].some(value => 
-        value === null || value === undefined || Number.isNaN(value)
-      )
-    ); // Remove rows with any null, undefined, or NaN values
+      .map((row) => {
+        // Using a ternary to check and parse date
+        let parsedDate = null;
+        try {
+          parsedDate = row.Date
+            ? parse(row.Date, "MM/dd/yyyy", new Date())
+            : null;
+        } catch (error) {
+          console.error(`Error parsing date: ${row.Date}`, error);
+        }
+
+        return {
+          player: row.Batter,
+          bpType: row.TaggedHitType,
+          date: parsedDate,
+          exitSpeed: Number(row.ExitSpeed),
+          angle: Number(row.Angle),
+          direction: Number(row.Direction),
+          distance: Number(row.Distance),
+          autoPitchType: row.AutoPitchType,
+        };
+      })
+      .filter(
+        (data) =>
+          ![data.exitSpeed, data.angle, data.direction, data.distance].some(
+            (value) =>
+              value === null || value === undefined || Number.isNaN(value),
+          ),
+      ); // Remove rows with any null, undefined, or NaN values
   };
 
   // Handle file upload
@@ -50,28 +54,28 @@ const CSVImporter = () => {
         // Call the function to send data to the backend
         sendDataToBackend(formattedData);
       },
-      header: true,   
+      header: true,
     });
   };
 
   const sendDataToBackend = async (formattedData) => {
     try {
-      const response = await fetch('/api/bp-data', {
-        method: 'POST',
+      const response = await fetch("/api/bp-data", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization':`Bearer ${user.token}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
         },
-        body: JSON.stringify({ workouts: formattedData })
+        body: JSON.stringify({ workouts: formattedData }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to upload data');
+        throw new Error("Failed to upload data");
       }
 
-      console.log('Data uploaded successfully');
+      console.log("Data uploaded successfully");
     } catch (error) {
-      console.error('Error uploading data:', error);
+      console.error("Error uploading data:", error);
     }
   };
 

@@ -1,37 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
-import { touchRippleClasses } from "@mui/material";
 
 function LineChart({ bpEntries }) {
   const [exitSpeedChartData, setExitSpeedChartData] = useState({
     labels: [],
-    datasets: []
+    datasets: [],
   });
 
   useEffect(() => {
     if (bpEntries) {
       const groupedEntriesByDateAndPlayer = bpEntries.reduce((acc, entry) => {
-        const date = new Date(entry.date).toLocaleString('en-US', {
-          month: '2-digit',
-          day: '2-digit',
-          year: '2-digit'
+        const date = new Date(entry.date).toLocaleString("en-US", {
+          month: "2-digit",
+          day: "2-digit",
+          year: "2-digit",
         });
         const player = entry.player;
-        
+
         if (!acc[date]) {
           acc[date] = {};
         }
-        
+
         if (!acc[date][player]) {
           acc[date][player] = [];
         }
-        
+
         acc[date][player].push({
           exitSpeed: entry.exitSpeed,
-          distance: entry.distance
+          distance: entry.distance,
         });
-        
+
         return acc;
       }, {});
 
@@ -78,7 +77,7 @@ function LineChart({ bpEntries }) {
       // }
 
       const labels = Object.keys(groupedEntriesByDateAndPlayer).sort();
-      const playerColors = ['red', 'navy', 'black']; // Color options for different players
+      const playerColors = ["red", "navy", "black"]; // Color options for different players
       const exitSpeedDataSets = [];
 
       for (const date of labels) {
@@ -86,19 +85,25 @@ function LineChart({ bpEntries }) {
 
         for (const player in playerData) {
           const playerEntries = playerData[player];
-          
+
           // Calculate max exit speed for the player on this date
-          const maxExitSpeed = Math.max(...playerEntries.map(entry => entry.exitSpeed));
-          
-          const datasetIndex = exitSpeedDataSets.findIndex(dataset => dataset.label === player);
+          const maxExitSpeed = Math.max(
+            ...playerEntries.map((entry) => entry.exitSpeed),
+          );
+
+          const datasetIndex = exitSpeedDataSets.findIndex(
+            (dataset) => dataset.label === player,
+          );
 
           if (datasetIndex === -1) {
             exitSpeedDataSets.push({
               label: player,
               data: [maxExitSpeed], // Add max exit speed for the first time
-              backgroundColor: playerColors[exitSpeedDataSets.length % playerColors.length],
-              borderColor: playerColors[exitSpeedDataSets.length % playerColors.length],
-              borderWidth: 2
+              backgroundColor:
+                playerColors[exitSpeedDataSets.length % playerColors.length],
+              borderColor:
+                playerColors[exitSpeedDataSets.length % playerColors.length],
+              borderWidth: 2,
             });
           } else {
             exitSpeedDataSets[datasetIndex].data.push(maxExitSpeed); // Push max exit speed for this date
@@ -108,7 +113,7 @@ function LineChart({ bpEntries }) {
 
       setExitSpeedChartData({
         labels: labels,
-        datasets: exitSpeedDataSets
+        datasets: exitSpeedDataSets,
       });
     }
   }, [bpEntries]);
@@ -117,16 +122,16 @@ function LineChart({ bpEntries }) {
     plugins: {
       title: {
         display: true,
-        text: 'Max Exit Speed in MPH',
-        size: 50
-      }
+        text: "Max Exit Speed in MPH",
+        size: 50,
+      },
     },
     scales: {
       y: {
         title: {
-          display: false
-        }
-      }
+          display: false,
+        },
+      },
     },
     maintainAspectRatio: false, // Disable maintaining aspect ratio
     responsive: true, // Keep the chart responsive
@@ -135,27 +140,31 @@ function LineChart({ bpEntries }) {
         left: 0,
         right: 0,
         top: 0,
-        bottom: 0
-      }
-    }
+        bottom: 0,
+      },
+    },
   };
-  
+
   const chartContainerStyle = {
-    border: '1px solid black',
-    padding: '10px',
-    marginBottom: '20px',
-    width: '45%', // Take up full width of the parent container
-    height: '400px', // Set the height of the container
-    boxSizing: 'border-box'
+    border: "1px solid black",
+    padding: "10px",
+    marginBottom: "20px",
+    width: "45%",
+    height: "400px",
+    boxSizing: "border-box",
   };
-  
+
   return (
     <>
       <div style={chartContainerStyle}>
-        <Line data={exitSpeedChartData} options={exitSpeedOptions} height={400} />
+        <Line
+          data={exitSpeedChartData}
+          options={exitSpeedOptions}
+          height={400}
+        />
       </div>
     </>
   );
-} 
+}
 
 export default LineChart;
